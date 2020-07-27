@@ -5,3 +5,79 @@ modtime = 1595468252.277512500
 [app/launcher]
 version = 8.0.4.1
 modtime = 1595468252.281512800
+
+[nav/default]
+version = 8.0.4.1
+modtime = 1595781376.220584600
+
+[views/economic_overview]
+owner = admin
+version = 8.0.4.1
+modtime = 1595843072.185611000
+
+[views/fred_default_list]
+owner = admin
+version = 8.0.4.1
+modtime = 1595699240.565743000
+
+[views/interest_rates_overview]
+owner = admin
+version = 8.0.4.1
+modtime = 1595842949.249104500
+
+[views/employment_overview]
+owner = admin
+version = 8.0.4.1
+modtime = 1595789032.728469000
+
+[views/corporate_bonds_overview]
+owner = admin
+version = 8.0.4.1
+modtime = 1595804118.128498200
+
+[views/manufacturing_overview]
+owner = admin
+version = 8.0.4.1
+modtime = 1595801806.111736100
+
+[views/daily_treasury_detail]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = admin
+version = 8.0.4.1
+modtime = 1595698784.662997600
+
+[views/fred_list_detail_drilldown]
+owner = admin
+version = 8.0.4.1
+modtime = 1595787752.510386800
+
+[views/consumer_overview]
+owner = admin
+version = 8.0.4.1
+modtime = 1595802205.225292300
+
+[views/housing_overview]
+owner = admin
+version = 8.0.4.1
+modtime = 1595802495.986472800
+
+[views/commodities_overview]
+owner = admin
+version = 8.0.4.1
+modtime = 1595803292.406370600
+
+[views/monetary_overview]
+owner = admin
+version = 8.0.4.1
+modtime = 1595815709.836505100
+
+[views/equity_markets_overview]
+owner = admin
+version = 8.0.4.1
+modtime = 1595819608.319910300
+
+[views/currency_overview]
+owner = admin
+version = 8.0.4.1
+modtime = 1595801167.432052300

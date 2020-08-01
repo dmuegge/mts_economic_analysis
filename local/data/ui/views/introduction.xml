@@ -1,0 +1,22 @@
+<dashboard>
+  <label>Introduction</label>
+  <row>
+    <panel>
+      <html>
+        Welcome to Economic Analysis for Splunk!<br></br><br></br>
+        
+        The goal of this application is to give users of Splunk and public econmic data another option to use and agregate that data.<br></br><br></br>
+        
+        The first source this application utilizes is FRED which is the Federal Reserver Economic Database. It has a wealth of information and is widely used.
+        It has a large repository of data, but limited features to process, analyze, and visualize the data.<br></br><br></br>
+        
+        Using the FRED Add-On for Splunk to easily index the FRED data will make the data available to this application. The default data sources will populate the prebuilt
+        dashboards, but additional data sources can be added and additioanl dashboards created.
+        
+        
+      </html>
+      
+    </panel>
+    
+  </row>
+</dashboard>

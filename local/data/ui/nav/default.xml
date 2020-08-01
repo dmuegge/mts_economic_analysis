@@ -1,4 +1,5 @@
 <nav search_view="search"> 
+  <view name="introduction" />
   <view name="economic_overview" default='true'/>
   
   <collection label="Interest Rates">
@@ -57,5 +58,7 @@
   	<view name="alerts" />
   	<view name="dashboards" />
   </collection>
+  
+  <view name="main_help" />
   
 </nav>

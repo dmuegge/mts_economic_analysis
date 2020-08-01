@@ -1,5 +1,5 @@
 <form script="custom_layout_width.js" stylesheet="auto_resize_input.css" theme="dark">
-  <label>Economic Overview</label>
+  <label>Economic Overview Tabs</label>
   <fieldset submitButton="false"></fieldset>
   <row>
     <panel>

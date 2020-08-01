@@ -8,12 +8,12 @@ modtime = 1595468252.281512800
 
 [nav/default]
 version = 8.0.4.1
-modtime = 1595781376.220584600
+modtime = 1596016995.351212800
 
 [views/economic_overview]
 owner = admin
 version = 8.0.4.1
-modtime = 1595843072.185611000
+modtime = 1596027130.032164500
 
 [views/fred_default_list]
 owner = admin
@@ -81,3 +81,20 @@ modtime = 1595819608.319910300
 owner = admin
 version = 8.0.4.1
 modtime = 1595801167.432052300
+
+[views/introduction]
+owner = admin
+version = 8.0.4.1
+modtime = 1596018019.645477000
+
+[views/main_help]
+owner = admin
+version = 8.0.4.1
+modtime = 1596017046.000589500
+
+[views/economic_overview_tabs]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = admin
+version = 8.0.4.1
+modtime = 1596277275.968483500

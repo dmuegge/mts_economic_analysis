@@ -65,7 +65,9 @@
     <panel id="serieslistDisplayPanel">
       <table id="serieslistDisplayTable">
         <search id="serieslistDisplaySearch">
-          <query>| inputlookup FRED_Default_List where (Category=$category_tok$ AND Frequency=$FREQUENCY_TOK$) | eval Update="Update" | eval Delete="Delete" | table *,FredID, Name, Frequency, Category, Description, URL,Update,Delete | sort FredID</query>
+          <query>| inputlookup FRED_Default_List where (Category=$category_tok$ AND Frequency=$FREQUENCY_TOK$) | eval Update="Update" | eval Delete="Delete" 
+| eval URL=ltrim(URL, "https://") 
+| table *,FredID, Name, Frequency, Category, Description, URL,Update,Delete | sort FredID</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
           <sampleRatio>1</sampleRatio>
@@ -84,6 +86,11 @@
               <![CDATA[
                /app/mts_economic_analysis/fred_list_detail_drilldown?form.FredID=$row.FredID$&form.Frequency=$row.Frequency$&form.Name=$row.Name$&form.Description=$row.Description$
              ]]>
+            </link>
+          </condition>
+          <condition field="URL">
+            <link target="_blank">
+              <![CDATA[ https://$row.URL|n$ ]]>
             </link>
           </condition>
         </drilldown>

@@ -1,4 +1,4 @@
-<form theme="dark">
+<form script="custom_layout_width.js" stylesheet="auto_resize_input.css" theme="dark">
   <label>FRED Series Detail</label>
   <fieldset submitButton="false">
     <input type="time" token="time_tok" searchWhenChanged="true">
@@ -8,9 +8,9 @@
         <latest>now</latest>
       </default>
     </input>
-    <input type="dropdown" token="series_id_tok" searchWhenChanged="true">
+    <input type="dropdown" token="series_id_tok" searchWhenChanged="true" id="ra_forcems01">
       <label>FRED Series</label>
-      <fieldForLabel>FredID</fieldForLabel>
+      <fieldForLabel>Name</fieldForLabel>
       <fieldForValue>FredID</fieldForValue>
       <search>
         <query>| inputlookup FRED_Default_List | dedup FredID |  sort FredID asc</query>
@@ -21,10 +21,10 @@
     </input>
   </fieldset>
   <row>
-    <panel>
+    <panel id="panel1001_setWidth_50">
       <table>
         <search>
-          <query>| inputlookup FRED_Default_List Where FredID=$series_id_tok$ | table Name, Frequency, Description | transpose column_name="Field" | rename "row 1" as Value</query>
+          <query>| inputlookup FRED_Default_List Where FredID=$series_id_tok$ | table Name,FredID, Frequency, Description | transpose column_name="Field" | rename "row 1" as Value</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
           <sampleRatio>1</sampleRatio>
@@ -33,12 +33,13 @@
         <option name="dataOverlayMode">none</option>
         <option name="drilldown">none</option>
         <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
         <option name="rowNumbers">false</option>
         <option name="totalsRow">false</option>
         <option name="wrap">true</option>
       </table>
     </panel>
-    <panel id="panel41_setWidth_20">
+    <panel id="panel1002_setWidth_20">
       <title>Range</title>
       <chart>
         <search>
@@ -79,31 +80,31 @@
         <option name="trellis.size">medium</option>
       </chart>
     </panel>
-    <panel>
-      <title>Average</title>
-      <single>
+    <panel id="panel1003_setWidth_30">
+      <table>
         <search>
-          <query>index="fred_data" $series_id_tok$ | stats avg(Value) as Average</query>
+          <query>index="fred_data" SeriesID=$series_id_tok$ 
+| stats avg(Value) as Average, median(Value) as "Median", stdev(Value) as "Standard Deviation", max(Value) as Maximum, min(Value) as Minimum 
+| eval Average=round(Average, 2)
+| eval Median=round(Median, 2)
+| eval "Standard Deviation"=round('Standard Deviation', 2)
+| eval Maximum=round(Maximum, 2)
+| eval Minimum=round(Minimum, 2)
+| transpose column_name=Statistic
+| rename "row 1" as Value</query>
           <earliest>0</earliest>
+          <latest></latest>
           <sampleRatio>1</sampleRatio>
         </search>
-        <option name="colorBy">value</option>
-        <option name="colorMode">none</option>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
         <option name="drilldown">none</option>
-        <option name="numberPrecision">0.000</option>
-        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
-        <option name="rangeValues">[0,30,70,100]</option>
-        <option name="showSparkline">1</option>
-        <option name="showTrendIndicator">1</option>
-        <option name="trellis.enabled">0</option>
-        <option name="trellis.scales.shared">1</option>
-        <option name="trellis.size">medium</option>
-        <option name="trendColorInterpretation">standard</option>
-        <option name="trendDisplayMode">absolute</option>
-        <option name="unitPosition">after</option>
-        <option name="useColors">0</option>
-        <option name="useThousandSeparators">1</option>
-      </single>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
     </panel>
   </row>
   <row>

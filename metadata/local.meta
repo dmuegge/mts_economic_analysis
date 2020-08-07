@@ -8,22 +8,22 @@ modtime = 1595468252.281512800
 
 [nav/default]
 version = 8.0.4.1
-modtime = 1596016995.351212800
+modtime = 1596646771.280272400
 
 [views/economic_overview]
 owner = admin
 version = 8.0.4.1
-modtime = 1596027130.032164500
+modtime = 1596796277.561134800
 
 [views/fred_default_list]
 owner = admin
 version = 8.0.4.1
-modtime = 1595699240.565743000
+modtime = 1596713605.272363900
 
 [views/interest_rates_overview]
 owner = admin
 version = 8.0.4.1
-modtime = 1595842949.249104500
+modtime = 1596760622.391180400
 
 [views/employment_overview]
 owner = admin
@@ -33,24 +33,17 @@ modtime = 1595789032.728469000
 [views/corporate_bonds_overview]
 owner = admin
 version = 8.0.4.1
-modtime = 1595804118.128498200
+modtime = 1596647300.234936700
 
 [views/manufacturing_overview]
 owner = admin
 version = 8.0.4.1
 modtime = 1595801806.111736100
 
-[views/daily_treasury_detail]
-access = read : [ * ], write : [ admin, power ]
-export = none
-owner = admin
-version = 8.0.4.1
-modtime = 1595698784.662997600
-
 [views/fred_list_detail_drilldown]
 owner = admin
 version = 8.0.4.1
-modtime = 1595787752.510386800
+modtime = 1596293074.375376900
 
 [views/consumer_overview]
 owner = admin
@@ -70,7 +63,7 @@ modtime = 1595803292.406370600
 [views/monetary_overview]
 owner = admin
 version = 8.0.4.1
-modtime = 1595815709.836505100
+modtime = 1596671937.849710900
 
 [views/equity_markets_overview]
 owner = admin
@@ -80,12 +73,12 @@ modtime = 1595819608.319910300
 [views/currency_overview]
 owner = admin
 version = 8.0.4.1
-modtime = 1595801167.432052300
+modtime = 1596670281.143910600
 
 [views/introduction]
 owner = admin
 version = 8.0.4.1
-modtime = 1596018019.645477000
+modtime = 1596297006.686787000
 
 [views/main_help]
 owner = admin

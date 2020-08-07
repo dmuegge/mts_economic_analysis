@@ -1,5 +1,5 @@
-<form stylesheet="auto_resize_input.css" theme="dark">
-  <label>Corporate Bonds Overview</label>
+<form script="custom_layout_width.js" stylesheet="auto_resize_input.css" theme="dark">
+  <label>Corporate Bonds</label>
   <fieldset submitButton="false">
     <input type="time" token="TIME_TOK" searchWhenChanged="true">
       <label>Time</label>
@@ -11,70 +11,12 @@
   </fieldset>
   <row>
     <panel>
-      <title>ICE BofAML AAA Option-Adjusted Spread</title>
-      <single>
-        <title>Latest (1yr)</title>
-        <search>
-          <query>index="fred_data" BAMLC0A1CAAA | chart first(Value) as Latest_Reading by _time</query>
-          <earliest>-1y</earliest>
-          <latest>now</latest>
-          <sampleRatio>1</sampleRatio>
-        </search>
-        <option name="colorBy">trend</option>
-        <option name="colorMode">none</option>
-        <option name="drilldown">none</option>
-        <option name="numberPrecision">0.00</option>
-        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
-        <option name="rangeValues">[0,30,70,100]</option>
-        <option name="refresh.display">progressbar</option>
-        <option name="showSparkline">1</option>
-        <option name="showTrendIndicator">1</option>
-        <option name="trellis.enabled">0</option>
-        <option name="trellis.scales.shared">1</option>
-        <option name="trellis.size">medium</option>
-        <option name="trendColorInterpretation">standard</option>
-        <option name="trendDisplayMode">absolute</option>
-        <option name="unitPosition">after</option>
-        <option name="useColors">1</option>
-        <option name="useThousandSeparators">1</option>
-      </single>
-    </panel>
-    <panel>
       <title>ICE BofAML AAA Effective Yield</title>
       <single>
-        <title>Latest (1yr)</title>
+        <title>TTM</title>
         <search>
-          <query>index="fred_data" BAMLC0A1CAAAEY | chart first(Value) as Latest_Reading by _time</query>
-          <earliest>-1y</earliest>
-          <latest>now</latest>
-          <sampleRatio>1</sampleRatio>
-        </search>
-        <option name="colorBy">trend</option>
-        <option name="colorMode">none</option>
-        <option name="drilldown">none</option>
-        <option name="numberPrecision">0.00</option>
-        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
-        <option name="rangeValues">[0,30,70,100]</option>
-        <option name="refresh.display">progressbar</option>
-        <option name="showSparkline">1</option>
-        <option name="showTrendIndicator">1</option>
-        <option name="trellis.enabled">0</option>
-        <option name="trellis.scales.shared">1</option>
-        <option name="trellis.size">medium</option>
-        <option name="trendColorInterpretation">standard</option>
-        <option name="trendDisplayMode">absolute</option>
-        <option name="unitPosition">after</option>
-        <option name="useColors">1</option>
-        <option name="useThousandSeparators">1</option>
-      </single>
-    </panel>
-    <panel>
-      <title>ICE BofAML BBB Option-Adjusted Spread</title>
-      <single>
-        <title>Latest (1yr)</title>
-        <search>
-          <query>index="fred_data" BAMLC0A4CBBB | chart first(Value) as Latest_Reading by _time</query>
-          <earliest>-1y</earliest>
+          <query>index="fred_data" BAMLC0A1CAAAEY | chart first(Value) as Latest_Reading by _time | search Latest_Reading!="."</query>
+          <earliest>-12mon</earliest>
           <latest>now</latest>
           <sampleRatio>1</sampleRatio>
         </search>
@@ -100,97 +42,10 @@
     <panel>
       <title>ICE BofAML BBB Effective Yield</title>
       <single>
-        <title>Latest (1yr)</title>
+        <title>TTM</title>
         <search>
-          <query>index="fred_data" BAMLC0A4CBBBEY | chart first(Value) as Latest_Reading by _time</query>
-          <earliest>-1y</earliest>
-          <latest>now</latest>
-          <sampleRatio>1</sampleRatio>
-        </search>
-        <option name="colorBy">trend</option>
-        <option name="colorMode">none</option>
-        <option name="drilldown">none</option>
-        <option name="numberPrecision">0.00</option>
-        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
-        <option name="rangeValues">[0,30,70,100]</option>
-        <option name="refresh.display">progressbar</option>
-        <option name="showSparkline">1</option>
-        <option name="showTrendIndicator">1</option>
-        <option name="trellis.enabled">0</option>
-        <option name="trellis.scales.shared">1</option>
-        <option name="trellis.size">medium</option>
-        <option name="trendColorInterpretation">standard</option>
-        <option name="trendDisplayMode">absolute</option>
-        <option name="unitPosition">after</option>
-        <option name="useColors">1</option>
-        <option name="useThousandSeparators">1</option>
-      </single>
-    </panel>
-    <panel>
-      <title>ICE BofAML High Yield Master II Option-Adjusted Spread</title>
-      <single>
-        <title>Latest (1yr)</title>
-        <search>
-          <query>index="fred_data" BAMLH0A0HYM2 | chart first(Value) as Latest_Reading by _time</query>
-          <earliest>-1y</earliest>
-          <latest>now</latest>
-          <sampleRatio>1</sampleRatio>
-        </search>
-        <option name="colorBy">trend</option>
-        <option name="colorMode">none</option>
-        <option name="drilldown">none</option>
-        <option name="numberPrecision">0.00</option>
-        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
-        <option name="rangeValues">[0,30,70,100]</option>
-        <option name="refresh.display">progressbar</option>
-        <option name="showSparkline">1</option>
-        <option name="showTrendIndicator">1</option>
-        <option name="trellis.enabled">0</option>
-        <option name="trellis.scales.shared">1</option>
-        <option name="trellis.size">medium</option>
-        <option name="trendColorInterpretation">standard</option>
-        <option name="trendDisplayMode">absolute</option>
-        <option name="unitPosition">after</option>
-        <option name="useColors">1</option>
-        <option name="useThousandSeparators">1</option>
-      </single>
-    </panel>
-    <panel>
-      <title>ICE BofAML High Yield Master II Effective Yield</title>
-      <single>
-        <title>Latest (1yr)</title>
-        <search>
-          <query>index="fred_data" BAMLH0A0HYM2EY | chart first(Value) as Latest_Reading by _time</query>
-          <earliest>-1y</earliest>
-          <latest>now</latest>
-          <sampleRatio>1</sampleRatio>
-        </search>
-        <option name="colorBy">trend</option>
-        <option name="colorMode">none</option>
-        <option name="drilldown">none</option>
-        <option name="numberPrecision">0.00</option>
-        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
-        <option name="rangeValues">[0,30,70,100]</option>
-        <option name="refresh.display">progressbar</option>
-        <option name="showSparkline">1</option>
-        <option name="showTrendIndicator">1</option>
-        <option name="trellis.enabled">0</option>
-        <option name="trellis.scales.shared">1</option>
-        <option name="trellis.size">medium</option>
-        <option name="trendColorInterpretation">standard</option>
-        <option name="trendDisplayMode">absolute</option>
-        <option name="unitPosition">after</option>
-        <option name="useColors">1</option>
-        <option name="useThousandSeparators">1</option>
-      </single>
-    </panel>
-    <panel>
-      <title>ICE BofAML US High Yield CCC or Below Option-Adjusted Spread</title>
-      <single>
-        <title>Latest (1yr)</title>
-        <search>
-          <query>index="fred_data" BAMLH0A3HYC | chart first(Value) as Latest_Reading by _time</query>
-          <earliest>-1y</earliest>
+          <query>index="fred_data" BAMLC0A4CBBBEY | chart first(Value) as Latest_Reading by _time | search Latest_Reading!="."</query>
+          <earliest>-12mon</earliest>
           <latest>now</latest>
           <sampleRatio>1</sampleRatio>
         </search>
@@ -216,10 +71,10 @@
     <panel>
       <title>Moody's Seasoned Aaa Yield</title>
       <single>
-        <title>Latest (1yr)</title>
+        <title>TTM</title>
         <search>
-          <query>index="fred_data" DAAA | chart first(Value) as Latest_Reading by _time</query>
-          <earliest>-1y</earliest>
+          <query>index="fred_data" DAAA | chart first(Value) as Latest_Reading by _time | search Latest_Reading!="."</query>
+          <earliest>-12mon</earliest>
           <latest>now</latest>
           <sampleRatio>1</sampleRatio>
         </search>
@@ -245,10 +100,155 @@
     <panel>
       <title>Moody's Seasoned Baa Yield</title>
       <single>
-        <title>Latest (1yr)</title>
+        <title>TTM</title>
         <search>
-          <query>index="fred_data" DBAA | chart first(Value) as Latest_Reading by _time</query>
-          <earliest>-1y</earliest>
+          <query>index="fred_data" DBAA | chart first(Value) as Latest_Reading by _time | search Latest_Reading!="."</query>
+          <earliest>-12mon</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+      </single>
+    </panel>
+    <panel>
+      <title>ICE BofAML High Yield Master II Effective Yield</title>
+      <single>
+        <title>TTM</title>
+        <search>
+          <query>index="fred_data" BAMLH0A0HYM2EY | chart first(Value) as Latest_Reading by _time | search Latest_Reading!="."</query>
+          <earliest>-12mon</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+      </single>
+    </panel>
+    <panel>
+      <title>ICE BofAML AAA Option-Adjusted Spread</title>
+      <single>
+        <title>TTM</title>
+        <search>
+          <query>index="fred_data" BAMLC0A1CAAA | chart first(Value) as Latest_Reading by _time | search Latest_Reading!="."</query>
+          <earliest>-12mon</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+      </single>
+    </panel>
+    <panel>
+      <title>ICE BofAML BBB Option-Adjusted Spread</title>
+      <single>
+        <title>TTM</title>
+        <search>
+          <query>index="fred_data" BAMLC0A4CBBB | chart first(Value) as Latest_Reading by _time | search Latest_Reading!="."</query>
+          <earliest>-12mon</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+      </single>
+    </panel>
+    <panel>
+      <title>ICE BofAML High Yield Master II Option-Adjusted Spread</title>
+      <single>
+        <title>TTM</title>
+        <search>
+          <query>index="fred_data" BAMLH0A0HYM2 | chart first(Value) as Latest_Reading by _time | search Latest_Reading!="."</query>
+          <earliest>-12mon</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+      </single>
+    </panel>
+    <panel>
+      <title>ICE BofAML US High Yield CCC or Below Option-Adjusted Spread</title>
+      <single>
+        <title>TTM</title>
+        <search>
+          <query>index="fred_data" BAMLH0A3HYC | chart first(Value) as Latest_Reading by _time | search Latest_Reading!="."</query>
+          <earliest>-12mon</earliest>
           <latest>now</latest>
           <sampleRatio>1</sampleRatio>
         </search>
@@ -274,14 +274,14 @@
   </row>
   <row>
     <panel>
-      <title>Bond Spread Comparison</title>
+      <title>Bond Comparison</title>
       <input type="multiselect" token="FRED_SERIES_TOK" searchWhenChanged="true" id="ra_forcems01">
         <label>FRED Series</label>
         <delimiter> </delimiter>
         <fieldForLabel>Name</fieldForLabel>
         <fieldForValue>FredID</fieldForValue>
         <search>
-          <query>| inputlookup FRED_Default_List where Category="Corporate Bonds" | table FredID, Name | sort FredID</query>
+          <query>| inputlookup FRED_Default_List where Category="Corporate Bonds" OR Category="Bond Market Indexes" | table FredID, Name | sort FredID</query>
         </search>
         <default>BAMLC0A1CAAA,BAMLC0A4CBBB</default>
       </input>
@@ -326,24 +326,33 @@
         <option name="trellis.size">medium</option>
       </chart>
     </panel>
-    <panel>
-      <title>Bond Yield Comparison</title>
-      <input type="multiselect" token="FRED_SERIES_TOK2" searchWhenChanged="true" id="ra_forcems02">
-        <label>FRED Series</label>
-        <delimiter> </delimiter>
+  </row>
+  <row>
+    <panel id="panel3001_setWidth_70">
+      <title>$CB_SERIES01_LABEL_TOK$ - $CB_SERIES01_TOK$</title>
+      <input type="dropdown" token="CB_SERIES01_TOK" searchWhenChanged="true">
+        <label>Series</label>
         <fieldForLabel>Name</fieldForLabel>
         <fieldForValue>FredID</fieldForValue>
         <search>
-          <query>| inputlookup FRED_Default_List where Category="Corporate Bonds" | table FredID, Name | sort FredID</query>
+          <query>| inputlookup FRED_Default_List Where Category="Corporate Bonds" OR Category="Bond Market Indexes"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
         </search>
-        <default>BAMLC0A1CAAAEY,BAMLC0A4CBBBEY,DAAA,DBAA</default>
+        <change>
+          <!-- use predefined input tokens to set -->
+          <!-- tokens for the selected label and value -->
+          <set token="CB_SERIES01_LABEL_TOK">$label$</set>
+        </change>
+        <default>BAMLC0A1CAAAEY</default>
+        <initialValue>BAMLC0A1CAAAEY</initialValue>
       </input>
       <chart>
+        <title>Daily Time Chart</title>
         <search>
-          <query>index="fred_data" SeriesID IN ($FRED_SERIES_TOK2$) | chart avg(Value) as value by _time SeriesID</query>
+          <query>index="fred_data" SeriesID=$CB_SERIES01_TOK$ | chart avg(Value) as value by _time</query>
           <earliest>$TIME_TOK.earliest$</earliest>
           <latest>$TIME_TOK.latest$</latest>
-          <sampleRatio>1</sampleRatio>
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
         <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
@@ -372,6 +381,105 @@
         <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
         <option name="charting.legend.mode">standard</option>
         <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="charting.seriesColors">[0x339BB2]</option>
+      </chart>
+    </panel>
+    <panel id="panel3002_setWidth_10">
+      <title>$CB_SERIES01_LABEL_TOK$</title>
+      <chart>
+        <title>Range</title>
+        <search>
+          <query>index="fred_data" $CB_SERIES01_TOK$ | sort _time desc
+| stats max(Value) as Maximum, min(Value) as Minimum, first(Value) as Last_Value | gauge Last_Value,Minimum,Maximum</query>
+          <earliest>$TIME_TOK.earliest$</earliest>
+          <latest>$TIME_TOK.latest$</latest>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">fillerGauge</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+    <panel id="panel3003_setWidth_20">
+      <title>$CB_SERIES01_LABEL_TOK$</title>
+      <chart>
+        <title>Summary Statistics</title>
+        <search>
+          <query>index="fred_data" SeriesID=$CB_SERIES01_TOK$ 
+| stats avg(Value) as Average, median(Value) as "Median", stdev(Value) as "STDEV", max(Value) as Maximum, min(Value) as Minimum
+| eval Average=round(Average, 2)
+| eval Median=round(Median, 2)
+| eval "STDEV"=round('STDEV', 2)
+| eval Maximum=round(Maximum, 2)
+| eval Minimum=round(Minimum, 2)
+| transpose column_name=Statistic
+| eval StatisticX=Statistic
+| chart values("row 1") by Statistic StatisticX</query>
+          <earliest>$TIME_TOK.earliest$</earliest>
+          <latest>$TIME_TOK.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">bar</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.chart.barSpacing">-50</option>
+        <option name="charting.chart.seriesSpacing">2</option>
+        <option name="charting.fieldColors">{"Average":0x006D9C,"Median":0x62B3B2,"STDEV":0xAF575A,"Maximum":0xF8BE34,"Minimum":0x708794}</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">none</option>
         <option name="charting.lineWidth">2</option>
         <option name="refresh.display">progressbar</option>
         <option name="trellis.enabled">0</option>

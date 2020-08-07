@@ -1,5 +1,117 @@
 <form theme="dark" script="custom_layout_width.js" stylesheet="auto_resize_input.css">
-  <label>Interest Rates Overview</label>
+  <label>Interest Rates</label>
+  <search>
+    <query>
+              <![CDATA[index="fred_data" SeriesID=DGS2 | sort Date desc | fields Date Value | eval Value=tostring(Value, "commas") | head 1 | table Date Value]]>
+            </query>
+    <done>
+      <condition match=" 'job.resultCount' &gt; 0">
+        <set token="DGS2_DT_TOK">$result.Date$</set>
+      </condition>
+      <condition>
+        <set token="DGS2_DT_TOK">"No Data"</set>
+      </condition>
+    </done>
+    <earliest>-7d</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  <search>
+    <query>
+              <![CDATA[index="fred_data" SeriesID=DGS5 | sort Date desc | fields Date Value | eval Value=tostring(Value, "commas") | head 1 | table Date Value]]>
+            </query>
+    <done>
+      <condition match=" 'job.resultCount' &gt; 0">
+        <set token="DGS5_DT_TOK">$result.Date$</set>
+      </condition>
+      <condition>
+        <set token="DGS5_DT_TOK">"No Data"</set>
+      </condition>
+    </done>
+    <earliest>-7d</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  <search>
+    <query>
+              <![CDATA[index="fred_data" SeriesID=DGS10 | sort Date desc | fields Date Value | eval Value=tostring(Value, "commas") | head 1 | table Date Value]]>
+            </query>
+    <done>
+      <condition match=" 'job.resultCount' &gt; 0">
+        <set token="DGS10_DT_TOK">$result.Date$</set>
+      </condition>
+      <condition>
+        <set token="DGS10_DT_TOK">"No Data"</set>
+      </condition>
+    </done>
+    <earliest>-7d</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  <search>
+    <query>
+              <![CDATA[index="fred_data" SeriesID=T10Y2Y | sort Date desc | fields Date Value | eval Value=tostring(Value, "commas") | head 1 | table Date Value]]>
+            </query>
+    <done>
+      <condition match=" 'job.resultCount' &gt; 0">
+        <set token="T10Y2Y_DT_TOK">$result.Date$</set>
+      </condition>
+      <condition>
+        <set token="T10Y2Y_DT_TOK">"No Data"</set>
+      </condition>
+    </done>
+    <earliest>-7d</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  <search>
+    <query>
+              <![CDATA[index="fred_data" SeriesID=DGS30 | sort Date desc | fields Date Value | eval Value=tostring(Value, "commas") | head 1 | table Date Value]]>
+            </query>
+    <done>
+      <condition match=" 'job.resultCount' &gt; 0">
+        <set token="DGS30_DT_TOK">$result.Date$</set>
+      </condition>
+      <condition>
+        <set token="DGS30_DT_TOK">"No Data"</set>
+      </condition>
+    </done>
+    <earliest>-7d</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  <search>
+    <query>
+              <![CDATA[index="fred_data" SeriesID=DFF | sort Date desc | fields Date Value | eval Value=tostring(Value, "commas") | head 1 | table Date Value]]>
+            </query>
+    <done>
+      <condition match=" 'job.resultCount' &gt; 0">
+        <set token="DFF_DT_TOK">$result.Date$</set>
+      </condition>
+      <condition>
+        <set token="DFF_DT_TOK">"No Data"</set>
+      </condition>
+    </done>
+    <earliest>-7d</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  <search>
+    <query>
+              <![CDATA[index="fred_data" SeriesID=MORTGAGE30US | sort Date desc | fields Date Value | eval Value=tostring(Value, "commas") | head 1 | table Date Value]]>
+            </query>
+    <done>
+      <condition match=" 'job.resultCount' &gt; 0">
+        <set token="MORTGAGE30US_DT_TOK">$result.Date$</set>
+      </condition>
+      <condition>
+        <set token="MORTGAGE30US_DT_TOK">"No Data"</set>
+      </condition>
+    </done>
+    <earliest>-7d</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
   <search>
     <query>
       <![CDATA[index="fred_data" SeriesID="DGS*" | sort Date desc | fields + Date | head 1 | table Date]]>
@@ -32,7 +144,7 @@
   </fieldset>
   <row>
     <panel id="panel001_setWidth_30">
-      <title>Current Yield Curve - $TITLE_DT_TOK$</title>
+      <title>Current Treasury Yield Curve - $TITLE_DT_TOK$</title>
       <chart>
         <search>
           <query>
@@ -75,11 +187,234 @@
         <option name="trellis.size">medium</option>
       </chart>
     </panel>
-    <panel id="panel002_setWidth_60">
-      <title>10y - 2y Spread</title>
+    <panel id="panel002_setWidth_10">
+      <title>2Y Treasury</title>
+      <single>
+        <title>$DGS2_DT_TOK$ - TTM</title>
+        <search>
+          <query>index="fred_data" SeriesID=DGS2 
+| chart last(Value) as Latest_Reading by _time
+| search Latest_Reading!="."</query>
+          <earliest>-90d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="numberPrecision">0.000</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel id="panel003_setWidth_10">
+      <title>5Y Treasury</title>
+      <single>
+        <title>$DGS5_DT_TOK$ - TTM</title>
+        <search>
+          <query>index="fred_data" SeriesID=DGS5 
+| chart last(Value) as Latest_Reading by _time
+| search Latest_Reading!="."</query>
+          <earliest>-90d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="numberPrecision">0.000</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel id="panel004_setWidth_10">
+      <title>10Y Treasury</title>
+      <single>
+        <title>$DGS10_DT_TOK$ - TTM</title>
+        <search>
+          <query>index="fred_data" SeriesID=DGS10
+| chart last(Value) as Latest_Reading by _time
+| search Latest_Reading!="."</query>
+          <earliest>-90d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="numberPrecision">0.000</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel id="panel005_setWidth_10">
+      <title>10Y-2Y Spread</title>
+      <single>
+        <title>$T10Y2Y_DT_TOK$ - TTM</title>
+        <search>
+          <query>index="fred_data" SeriesID=T10Y2Y
+| chart last(Value) as Latest_Reading by _time
+| search Latest_Reading!="."</query>
+          <earliest>-90d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="numberPrecision">0.000</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel id="panel006_setWidth_10">
+      <title>30Y Treasury</title>
+      <single>
+        <title>$DGS30_DT_TOK$ - TTM</title>
+        <search>
+          <query>index="fred_data" SeriesID=DGS30
+| chart last(Value) as Latest_Reading by _time
+| search Latest_Reading!="."</query>
+          <earliest>-90d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="numberPrecision">0.000</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel id="panel007_setWidth_10">
+      <title>Fed Funds</title>
+      <single>
+        <title>$DFF_DT_TOK$ - TTM</title>
+        <search>
+          <query>index="fred_data" SeriesID=DFF
+| chart last(Value) as Latest_Reading by _time
+| search Latest_Reading!="."</query>
+          <earliest>-90d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="numberPrecision">0.000</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel id="panel008_setWidth_10">
+      <title>30Y Mortgage</title>
+      <single>
+        <title>$MORTGAGE30US_DT_TOK$ - TTM</title>
+        <search>
+          <query>index="fred_data" SeriesID=MORTGAGE30US
+| chart last(Value) as Latest_Reading by _time
+| search Latest_Reading!="."</query>
+          <earliest>-90d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="numberPrecision">0.000</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Rate Comparison</title>
+      <input type="multiselect" token="IR_COMP_SERIES_TOK" searchWhenChanged="true" id="ra_forcems01">
+        <label>Series</label>
+        <delimiter> </delimiter>
+        <fieldForLabel>Name</fieldForLabel>
+        <fieldForValue>FredID</fieldForValue>
+        <search>
+          <query>| inputlookup FRED_Default_List where Category="Interest Rates" | table FredID, Name | sort FredID</query>
+        </search>
+        <default>DGS2,DGS10</default>
+        <initialValue>DGS2,DGS10</initialValue>
+      </input>
       <chart>
         <search>
-          <query>index="fred_data" T10Y2Y | chart avg(Value) as value by _time</query>
+          <query>index="fred_data" SeriesID IN ($IR_COMP_SERIES_TOK$) | chart avg(Value) as value by _time SeriesID</query>
+          <earliest>$time_tok.earliest$</earliest>
+          <latest>$time_tok.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel id="panel61_setWidth_70">
+      <title>Rate Detail</title>
+      <input type="dropdown" token="IR_SERIES01_TOK" searchWhenChanged="true">
+        <label>Series</label>
+        <fieldForLabel>Name</fieldForLabel>
+        <fieldForValue>FredID</fieldForValue>
+        <search>
+          <query>| inputlookup FRED_Default_List Where Category="Interest Rates"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <default>DFF</default>
+        <initialValue>DFF</initialValue>
+        <change>
+          <!-- use predefined input tokens to set -->
+          <!-- tokens for the selected label and value -->
+          <set token="IR_SERIES01_LABEL_TOK">$label$</set>
+        </change>
+      </input>
+      <chart>
+        <title>$IR_SERIES01_LABEL_TOK$ - $IR_SERIES01_TOK$ - Daily Time Chart</title>
+        <search>
+          <query>index="fred_data" SeriesID=$IR_SERIES01_TOK$ | chart avg(Value) as value by _time</query>
           <earliest>$time_tok.earliest$</earliest>
           <latest>$time_tok.latest$</latest>
         </search>
@@ -99,7 +434,7 @@
         <option name="charting.chart.bubbleMaximumSize">50</option>
         <option name="charting.chart.bubbleMinimumSize">10</option>
         <option name="charting.chart.bubbleSizeBy">area</option>
-        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.nullValueMode">connect</option>
         <option name="charting.chart.showDataLabels">none</option>
         <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
         <option name="charting.chart.stackMode">default</option>
@@ -117,55 +452,12 @@
         <option name="trellis.size">medium</option>
       </chart>
     </panel>
-    <panel id="panel003_setWidth_10">
-      <title>10y - 2Y Range - $TITLE_DT_TOK$</title>
-      <chart>
-        <search>
-          <query>index="fred_data" T10Y2Y | sort _time desc
-| stats max(Value) as Maximum, min(Value) as Minimum, first(Value) as Last_Value | gauge Last_Value,Minimum,Maximum</query>
-          <earliest>$time_tok.earliest$</earliest>
-          <latest>$time_tok.latest$</latest>
-        </search>
-        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
-        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
-        <option name="charting.axisTitleX.visibility">visible</option>
-        <option name="charting.axisTitleY.visibility">visible</option>
-        <option name="charting.axisTitleY2.visibility">visible</option>
-        <option name="charting.axisX.abbreviation">none</option>
-        <option name="charting.axisX.scale">linear</option>
-        <option name="charting.axisY.abbreviation">none</option>
-        <option name="charting.axisY.scale">linear</option>
-        <option name="charting.axisY2.abbreviation">none</option>
-        <option name="charting.axisY2.enabled">0</option>
-        <option name="charting.axisY2.scale">inherit</option>
-        <option name="charting.chart">fillerGauge</option>
-        <option name="charting.chart.bubbleMaximumSize">50</option>
-        <option name="charting.chart.bubbleMinimumSize">10</option>
-        <option name="charting.chart.bubbleSizeBy">area</option>
-        <option name="charting.chart.nullValueMode">gaps</option>
-        <option name="charting.chart.showDataLabels">none</option>
-        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
-        <option name="charting.chart.stackMode">default</option>
-        <option name="charting.chart.style">shiny</option>
-        <option name="charting.layout.splitSeries">0</option>
-        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
-        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
-        <option name="charting.legend.mode">standard</option>
-        <option name="charting.legend.placement">right</option>
-        <option name="charting.lineWidth">2</option>
-        <option name="refresh.display">progressbar</option>
-        <option name="trellis.enabled">0</option>
-        <option name="trellis.scales.shared">1</option>
-        <option name="trellis.size">medium</option>
-      </chart>
-    </panel>
-  </row>
-  <row>
     <panel id="panel201_setWidth_10">
-      <title>Effective Federal Funds Rate Range</title>
+      <title>$IR_SERIES01_LABEL_TOK$</title>
       <chart>
+        <title>Range</title>
         <search>
-          <query>index="fred_data" DFF | sort _time desc
+          <query>index="fred_data" $IR_SERIES01_TOK$ | sort _time desc
 | stats max(Value) as Maximum, min(Value) as Minimum, first(Value) as Last_Value | gauge Last_Value,Minimum,Maximum</query>
           <earliest>$time_tok.earliest$</earliest>
           <latest>$time_tok.latest$</latest>
@@ -191,7 +483,6 @@
         <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
         <option name="charting.chart.stackMode">default</option>
         <option name="charting.chart.style">shiny</option>
-        <option name="charting.drilldown">all</option>
         <option name="charting.layout.splitSeries">0</option>
         <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
         <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
@@ -205,44 +496,28 @@
       </chart>
     </panel>
     <panel id="panel202_setWidth_20">
-      <title>Effective Federal Funds Rate Average</title>
-      <single>
-        <search>
-          <query>index="fred_data" SeriesID=DFF | stats avg(Value) as Average</query>
-          <earliest>$time_tok.earliest$</earliest>
-          <latest>$time_tok.latest$</latest>
-        </search>
-        <option name="colorBy">value</option>
-        <option name="colorMode">none</option>
-        <option name="drilldown">none</option>
-        <option name="numberPrecision">0.00</option>
-        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
-        <option name="rangeValues">[0,30,70,100]</option>
-        <option name="refresh.display">progressbar</option>
-        <option name="showSparkline">1</option>
-        <option name="showTrendIndicator">1</option>
-        <option name="trellis.enabled">0</option>
-        <option name="trellis.scales.shared">1</option>
-        <option name="trellis.size">medium</option>
-        <option name="trendColorInterpretation">standard</option>
-        <option name="trendDisplayMode">absolute</option>
-        <option name="unitPosition">after</option>
-        <option name="useColors">0</option>
-        <option name="useThousandSeparators">1</option>
-      </single>
-    </panel>
-    <panel id="panel61_setWidth_70">
-      <title>Effective Federal Funds Rate - Daily</title>
+      <title>$IR_SERIES01_LABEL_TOK$</title>
       <chart>
+        <title>Summary Statistics</title>
         <search>
-          <query>index="fred_data" SeriesID=DFF | chart avg(Value) as value by _time</query>
+          <query>index="fred_data" SeriesID=$IR_SERIES01_TOK$ 
+| stats avg(Value) as Average, median(Value) as "Median", stdev(Value) as "STDEV", max(Value) as Maximum, min(Value) as Minimum
+| eval Average=round(Average, 2)
+| eval Median=round(Median, 2)
+| eval "STDEV"=round('STDEV', 2)
+| eval Maximum=round(Maximum, 2)
+| eval Minimum=round(Minimum, 2)
+| transpose column_name=Statistic
+| eval StatisticX=Statistic
+| chart values("row 1") by Statistic StatisticX</query>
           <earliest>$time_tok.earliest$</earliest>
           <latest>$time_tok.latest$</latest>
+          <sampleRatio>1</sampleRatio>
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
         <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
-        <option name="charting.axisTitleX.visibility">visible</option>
-        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
         <option name="charting.axisTitleY2.visibility">visible</option>
         <option name="charting.axisX.abbreviation">none</option>
         <option name="charting.axisX.scale">linear</option>
@@ -251,136 +526,23 @@
         <option name="charting.axisY2.abbreviation">none</option>
         <option name="charting.axisY2.enabled">0</option>
         <option name="charting.axisY2.scale">inherit</option>
-        <option name="charting.chart">line</option>
-        <option name="charting.chart.bubbleMaximumSize">50</option>
-        <option name="charting.chart.bubbleMinimumSize">10</option>
-        <option name="charting.chart.bubbleSizeBy">area</option>
-        <option name="charting.chart.nullValueMode">connect</option>
-        <option name="charting.chart.showDataLabels">none</option>
-        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
-        <option name="charting.chart.stackMode">default</option>
-        <option name="charting.chart.style">shiny</option>
-        <option name="charting.drilldown">none</option>
-        <option name="charting.layout.splitSeries">0</option>
-        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
-        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
-        <option name="charting.legend.mode">standard</option>
-        <option name="charting.legend.placement">right</option>
-        <option name="charting.lineWidth">2</option>
-        <option name="refresh.display">progressbar</option>
-        <option name="trellis.enabled">0</option>
-        <option name="trellis.scales.shared">1</option>
-        <option name="trellis.size">medium</option>
-      </chart>
-    </panel>
-  </row>
-  <row>
-    <panel id="panel301_setWidth_10">
-      <title>US 30 Year Mortgage Rate Range</title>
-      <chart>
-        <search>
-          <query>index="fred_data" SeriesID=MORTGAGE30US 
-| sort _time desc
-| stats max(Value) as Maximum, min(Value) as Minimum, first(Value) as Last_Value | gauge Last_Value,Minimum,Maximum</query>
-          <earliest>$time_tok.earliest$</earliest>
-          <latest>$time_tok.latest$</latest>
-        </search>
-        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
-        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
-        <option name="charting.axisTitleX.visibility">visible</option>
-        <option name="charting.axisTitleY.visibility">visible</option>
-        <option name="charting.axisTitleY2.visibility">visible</option>
-        <option name="charting.axisX.abbreviation">none</option>
-        <option name="charting.axisX.scale">linear</option>
-        <option name="charting.axisY.abbreviation">none</option>
-        <option name="charting.axisY.scale">linear</option>
-        <option name="charting.axisY2.abbreviation">none</option>
-        <option name="charting.axisY2.enabled">0</option>
-        <option name="charting.axisY2.scale">inherit</option>
-        <option name="charting.chart">fillerGauge</option>
+        <option name="charting.chart">bar</option>
         <option name="charting.chart.bubbleMaximumSize">50</option>
         <option name="charting.chart.bubbleMinimumSize">10</option>
         <option name="charting.chart.bubbleSizeBy">area</option>
         <option name="charting.chart.nullValueMode">gaps</option>
-        <option name="charting.chart.showDataLabels">none</option>
-        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
-        <option name="charting.chart.stackMode">default</option>
-        <option name="charting.chart.style">shiny</option>
-        <option name="charting.drilldown">all</option>
-        <option name="charting.layout.splitSeries">0</option>
-        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
-        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
-        <option name="charting.legend.mode">standard</option>
-        <option name="charting.legend.placement">right</option>
-        <option name="charting.lineWidth">2</option>
-        <option name="refresh.display">progressbar</option>
-        <option name="trellis.enabled">0</option>
-        <option name="trellis.scales.shared">1</option>
-        <option name="trellis.size">medium</option>
-      </chart>
-    </panel>
-    <panel id="panel302_setWidth_20">
-      <title>US 30 Year Mortgage Rate Average</title>
-      <single>
-        <search>
-          <query>index="fred_data" SeriesID=MORTGAGE30US | stats avg(Value) as Average</query>
-          <earliest>$time_tok.earliest$</earliest>
-          <latest>$time_tok.latest$</latest>
-        </search>
-        <option name="colorBy">value</option>
-        <option name="colorMode">none</option>
-        <option name="drilldown">none</option>
-        <option name="numberPrecision">0.00</option>
-        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
-        <option name="rangeValues">[0,30,70,100]</option>
-        <option name="refresh.display">progressbar</option>
-        <option name="showSparkline">1</option>
-        <option name="showTrendIndicator">1</option>
-        <option name="trellis.enabled">0</option>
-        <option name="trellis.scales.shared">1</option>
-        <option name="trellis.size">medium</option>
-        <option name="trendColorInterpretation">standard</option>
-        <option name="trendDisplayMode">absolute</option>
-        <option name="unitPosition">after</option>
-        <option name="useColors">0</option>
-        <option name="useThousandSeparators">1</option>
-      </single>
-    </panel>
-    <panel id="panel303_setWidth_70">
-      <title>US 30 Year Mortgage Rate - Weekly</title>
-      <chart>
-        <search>
-          <query>index="fred_data" SeriesID=MORTGAGE30US | timechart span=1d avg(Value) as value</query>
-          <earliest>$time_tok.earliest$</earliest>
-          <latest>$time_tok.latest$</latest>
-        </search>
-        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
-        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
-        <option name="charting.axisTitleX.visibility">visible</option>
-        <option name="charting.axisTitleY.visibility">visible</option>
-        <option name="charting.axisTitleY2.visibility">visible</option>
-        <option name="charting.axisX.abbreviation">none</option>
-        <option name="charting.axisX.scale">linear</option>
-        <option name="charting.axisY.abbreviation">none</option>
-        <option name="charting.axisY.scale">linear</option>
-        <option name="charting.axisY2.abbreviation">none</option>
-        <option name="charting.axisY2.enabled">0</option>
-        <option name="charting.axisY2.scale">inherit</option>
-        <option name="charting.chart">line</option>
-        <option name="charting.chart.bubbleMaximumSize">50</option>
-        <option name="charting.chart.bubbleMinimumSize">10</option>
-        <option name="charting.chart.bubbleSizeBy">area</option>
-        <option name="charting.chart.nullValueMode">connect</option>
-        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.showDataLabels">all</option>
         <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
         <option name="charting.chart.stackMode">default</option>
         <option name="charting.chart.style">shiny</option>
         <option name="charting.drilldown">none</option>
+        <option name="charting.chart.barSpacing">-50</option>
+        <option name="charting.chart.seriesSpacing">2</option>
+        <option name="charting.fieldColors">{"Average":0x006D9C,"Median":0x62B3B2,"STDEV":0xAF575A,"Maximum":0xF8BE34,"Minimum":0x708794}</option>
         <option name="charting.layout.splitSeries">0</option>
         <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
-        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
         <option name="charting.legend.mode">standard</option>
-        <option name="charting.legend.placement">right</option>
+        <option name="charting.legend.placement">none</option>
         <option name="charting.lineWidth">2</option>
         <option name="refresh.display">progressbar</option>
         <option name="trellis.enabled">0</option>

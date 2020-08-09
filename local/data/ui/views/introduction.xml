@@ -7,7 +7,7 @@
         The goal of this application is to provide users of Splunk access to public econmic data.<br/>
         <br/>
         
-        The data source this application utilizes is FRED®, which is the Federal Reserve Economic Database. It is widely used and has a wealth of information.
+        The first and primary data source this application utilizes is FRED®, which is the Federal Reserve Economic Database. It is a widely used source of economic data and has a wealth of information.
         There are hundreds of data sources available from this repository this application uses many, which include the following:
         <ul>
           <li>
@@ -42,8 +42,9 @@
         <br/>
         
         Using the FRED Add-On for Splunk to easily index the FRED data will make the data available to this application. The default data sources will populate the prebuilt
-        dashboards, but additional data sources can be added and additioanl dashboards created.
+        dashboards, but additional data sources can be added and additioanl dashboards created.<br/><br/>
         
+        Other data sources may be added to this application in the future based on the availability of additional applicable add-ons.
         
       </html>
     </panel>

@@ -8,12 +8,12 @@ modtime = 1595468252.281512800
 
 [nav/default]
 version = 8.0.4.1
-modtime = 1596646771.280272400
+modtime = 1596975772.187887500
 
 [views/economic_overview]
 owner = admin
 version = 8.0.4.1
-modtime = 1596796277.561134800
+modtime = 1596978814.502383200
 
 [views/fred_default_list]
 owner = admin
@@ -23,67 +23,67 @@ modtime = 1596713605.272363900
 [views/interest_rates_overview]
 owner = admin
 version = 8.0.4.1
-modtime = 1596760622.391180400
+modtime = 1596933970.306654600
 
 [views/employment_overview]
 owner = admin
 version = 8.0.4.1
-modtime = 1595789032.728469000
+modtime = 1596930904.348038900
 
 [views/corporate_bonds_overview]
 owner = admin
 version = 8.0.4.1
-modtime = 1596647300.234936700
+modtime = 1596908080.497990100
 
 [views/manufacturing_overview]
 owner = admin
 version = 8.0.4.1
-modtime = 1595801806.111736100
+modtime = 1596970454.975452000
 
 [views/fred_list_detail_drilldown]
 owner = admin
 version = 8.0.4.1
-modtime = 1596293074.375376900
+modtime = 1596989222.523079300
 
 [views/consumer_overview]
 owner = admin
 version = 8.0.4.1
-modtime = 1595802205.225292300
+modtime = 1596931005.346593300
 
 [views/housing_overview]
 owner = admin
 version = 8.0.4.1
-modtime = 1595802495.986472800
+modtime = 1596970902.397115800
 
 [views/commodities_overview]
 owner = admin
 version = 8.0.4.1
-modtime = 1595803292.406370600
+modtime = 1596926693.021008000
 
 [views/monetary_overview]
 owner = admin
 version = 8.0.4.1
-modtime = 1596671937.849710900
+modtime = 1596907698.818986600
 
 [views/equity_markets_overview]
 owner = admin
 version = 8.0.4.1
-modtime = 1595819608.319910300
+modtime = 1596928438.703762300
 
 [views/currency_overview]
 owner = admin
 version = 8.0.4.1
-modtime = 1596670281.143910600
+modtime = 1596928384.727144400
 
 [views/introduction]
 owner = admin
 version = 8.0.4.1
-modtime = 1596297006.686787000
+modtime = 1596973105.340990600
 
 [views/main_help]
 owner = admin
 version = 8.0.4.1
-modtime = 1596017046.000589500
+modtime = 1596975609.100660900
 
 [views/economic_overview_tabs]
 access = read : [ * ], write : [ admin, power ]
@@ -91,3 +91,13 @@ export = none
 owner = admin
 version = 8.0.4.1
 modtime = 1596277275.968483500
+
+[views/getting_started]
+owner = admin
+version = 8.0.4.1
+modtime = 1596975310.085176100
+
+[views/adding_a_data_series]
+owner = admin
+version = 8.0.4.1
+modtime = 1596975589.722465900

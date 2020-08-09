@@ -97,7 +97,8 @@
   
   <collection label="Help">
     <view name="introduction" />
-    <view name="main_help" />
+    <view name="getting_started" />
+    <view name="adding_a_data_series" />
   </collection>
   
   

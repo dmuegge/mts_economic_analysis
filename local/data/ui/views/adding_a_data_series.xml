@@ -1,0 +1,26 @@
+<dashboard theme="dark">
+  <label>Adding a Data Series</label>
+  <row>
+    <panel>
+      <title>Getting new data from FRED</title>
+      <html>
+        <br/>
+        <br/>
+        
+        <ul>
+          <li>
+            
+          </li>
+          <li>
+            
+          </li>
+          
+        </ul>
+        <br/>
+        <br/>
+        
+        
+      </html>
+    </panel>
+  </row>
+</dashboard>

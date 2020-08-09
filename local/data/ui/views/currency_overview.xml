@@ -1,5 +1,43 @@
-<form script="custom_layout_width.js" theme="dark">
-  <label>Currency Overview</label>
+<form script="custom_layout_width.js" stylesheet="auto_resize_input.css" theme="dark">
+  <label>Currency</label>
+  <search id="all_currency_ttm_base">
+    <query>
+      index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Exchange Rates" OR Category="Crypto*") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+| stats last(Value) as Value by _time SeriesID
+    </query>
+    <earliest>-12mon</earliest>
+    <latest>now</latest>
+  </search>
+  <search>
+    <query>
+      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Exchange Rates" OR Category="Crypto*") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
+    </query>
+    <done>
+      <condition match=" 'job.resultCount' &gt; 0">
+        <set token="DEXUSEU_DT_TOK">$result.DEXUSEU$</set>
+        <set token="DEXUSUK_DT_TOK">$result.DEXUSUK$</set>
+        <set token="DEXCHUS_DT_TOK">$result.DEXCHUS$</set>
+        <set token="DEXJPUS_DT_TOK">$result.DEXJPUS$</set>
+        <set token="DEXCAUS_DT_TOK">$result.DEXCAUS$</set>
+        <set token="DEXUSAL_DT_TOK">$result.DEXUSAL$</set>
+        <set token="DEXMXUS_DT_TOK">$result.DEXMXUS$</set>
+        <set token="CBBTCUSD_DT_TOK">$result.CBBTCUSD$</set>
+      </condition>
+      <condition>
+        <set token="DEXUSEU_DT_TOK">"No Data"</set>
+        <set token="DEXUSUK_DT_TOK">"No Data"</set>
+        <set token="DEXCHUS_DT_TOK">"No Data"</set>
+        <set token="DEXJPUS_DT_TOK">"No Data"</set>
+        <set token="DEXCAUS_DT_TOK">"No Data"</set>
+        <set token="DEXUSAL_DT_TOK">"No Data"</set>
+        <set token="DEXMXUS_DT_TOK">"No Data"</set>
+        <set token="CBBTCUSD_DT_TOK">"No Data"</set>
+      </condition>
+    </done>
+    <earliest>-30d</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
   <fieldset submitButton="false">
     <input type="time" token="time_tok" searchWhenChanged="true">
       <label>Time</label>
@@ -13,15 +51,12 @@
     <panel>
       <title>US Dollar/Euro</title>
       <single>
-        <search>
-          <query>index="fred_data" DEXUSEU 
-| chart last(Value) as Latest_Reading by _time
-| search Latest_Reading!="."</query>
-          <earliest>-1y</earliest>
-          <latest>now</latest>
-          <sampleRatio>1</sampleRatio>
+        <title>$DEXUSEU_DT_TOK$ - TTM</title>
+        <search base="all_currency_ttm_base">
+          <query>| search SeriesID=DEXUSEU | chart values(Value) as Value by _time</query>
         </search>
         <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
         <option name="numberPrecision">0.000</option>
         <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
         <option name="refresh.display">progressbar</option>
@@ -29,20 +64,20 @@
         <option name="trellis.scales.shared">1</option>
         <option name="trellis.size">medium</option>
         <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/currency_overview</link>
+        </drilldown>
       </single>
     </panel>
     <panel>
       <title>US Dollar/British Pound</title>
       <single>
-        <search>
-          <query>index="fred_data" DEXUSUK 
-| chart last(Value) as Latest_Reading by _time
-| search Latest_Reading!="."</query>
-          <earliest>-90d</earliest>
-          <latest>now</latest>
-          <sampleRatio>1</sampleRatio>
+        <title>$DEXUSUK_DT_TOK$ - TTM</title>
+        <search base="all_currency_ttm_base">
+          <query>| search SeriesID=DEXUSUK | chart values(Value) as Value by _time</query>
         </search>
         <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
         <option name="numberPrecision">0.000</option>
         <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
         <option name="refresh.display">progressbar</option>
@@ -50,20 +85,20 @@
         <option name="trellis.scales.shared">1</option>
         <option name="trellis.size">medium</option>
         <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/currency_overview</link>
+        </drilldown>
       </single>
     </panel>
     <panel>
       <title>Chinese Yuan/US Dollar</title>
       <single>
-        <search>
-          <query>index="fred_data" DEXCHUS 
-| chart last(Value) as Latest_Reading by _time
-| search Latest_Reading!="."</query>
-          <earliest>-90d</earliest>
-          <latest>now</latest>
-          <sampleRatio>1</sampleRatio>
+        <title>$DEXCHUS_DT_TOK$ - TTM</title>
+        <search base="all_currency_ttm_base">
+          <query>| search SeriesID=DEXCHUS | chart values(Value) as Value by _time</query>
         </search>
         <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
         <option name="numberPrecision">0.000</option>
         <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
         <option name="refresh.display">progressbar</option>
@@ -71,20 +106,20 @@
         <option name="trellis.scales.shared">1</option>
         <option name="trellis.size">medium</option>
         <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/currency_overview</link>
+        </drilldown>
       </single>
     </panel>
     <panel>
       <title>Japanese Yen/US Dollar</title>
       <single>
-        <search>
-          <query>index="fred_data" DEXJPUS 
-| chart last(Value) as Latest_Reading by _time
-| search Latest_Reading!="."</query>
-          <earliest>-90d</earliest>
-          <latest>now</latest>
-          <sampleRatio>1</sampleRatio>
+        <title>$DEXJPUS_DT_TOK$ - TTM</title>
+        <search base="all_currency_ttm_base">
+          <query>| search SeriesID=DEXJPUS | chart values(Value) as Value by _time</query>
         </search>
         <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
         <option name="numberPrecision">0.000</option>
         <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
         <option name="refresh.display">progressbar</option>
@@ -92,20 +127,20 @@
         <option name="trellis.scales.shared">1</option>
         <option name="trellis.size">medium</option>
         <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/currency_overview</link>
+        </drilldown>
       </single>
     </panel>
     <panel>
       <title>Canadian Dollar/US Dollar</title>
       <single>
-        <search>
-          <query>index="fred_data" DEXCAUS 
-| chart last(Value) as Latest_Reading by _time
-| search Latest_Reading!="."</query>
-          <earliest>-90d</earliest>
-          <latest>now</latest>
-          <sampleRatio>1</sampleRatio>
+        <title>$DEXCAUS_DT_TOK$ - TTM</title>
+        <search base="all_currency_ttm_base">
+          <query>| search SeriesID=DEXCAUS | chart values(Value) as Value by _time</query>
         </search>
         <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
         <option name="numberPrecision">0.000</option>
         <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
         <option name="refresh.display">progressbar</option>
@@ -113,20 +148,20 @@
         <option name="trellis.scales.shared">1</option>
         <option name="trellis.size">medium</option>
         <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/currency_overview</link>
+        </drilldown>
       </single>
     </panel>
     <panel>
       <title>US Dollar/Australian Dollar</title>
       <single>
-        <search>
-          <query>index="fred_data" DEXUSAL 
-| chart last(Value) as Latest_Reading by _time
-| search Latest_Reading!="."</query>
-          <earliest>-90d</earliest>
-          <latest>now</latest>
-          <sampleRatio>1</sampleRatio>
+        <title>$DEXUSAL_DT_TOK$ - TTM</title>
+        <search base="all_currency_ttm_base">
+          <query>| search SeriesID=DEXUSAL | chart values(Value) as Value by _time</query>
         </search>
         <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
         <option name="numberPrecision">0.000</option>
         <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
         <option name="refresh.display">progressbar</option>
@@ -134,42 +169,67 @@
         <option name="trellis.scales.shared">1</option>
         <option name="trellis.size">medium</option>
         <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/currency_overview</link>
+        </drilldown>
       </single>
     </panel>
     <panel>
-      <title>Mexican Peso/Dollar</title>
+      <title>Mexican Peso/US Dollar</title>
       <single>
-        <search>
-          <query>index="fred_data" DEXMXUS 
-| chart last(Value) as Latest_Reading by _time
-| search Latest_Reading!="."</query>
-          <earliest>-90d</earliest>
-          <latest>now</latest>
-          <sampleRatio>1</sampleRatio>
+        <title>$DEXMXUS_DT_TOK$ - TTM</title>
+        <search base="all_currency_ttm_base">
+          <query>| search SeriesID=DEXMXUS | chart values(Value) as Value by _time</query>
         </search>
         <option name="colorBy">trend</option>
-        <option name="numberPrecision">0.000</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.00</option>
         <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
         <option name="refresh.display">progressbar</option>
         <option name="trellis.enabled">0</option>
         <option name="trellis.scales.shared">1</option>
         <option name="trellis.size">medium</option>
         <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/currency_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Coinbase Bitcoin</title>
+      <single>
+        <title>$CBBTCUSD_DT_TOK$ - TTM</title>
+        <search base="all_currency_ttm_base">
+          <query>| search SeriesID=CBBTCUSD | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/currency_overview</link>
+        </drilldown>
       </single>
     </panel>
   </row>
   <row>
     <panel>
-      <title>Currency Comparison</title>
+      <title>Comparison</title>
       <input type="multiselect" token="FRED_SERIES_TOK" searchWhenChanged="true" id="ra_forcems01">
-        <label>FRED Series</label>
+        <label>Series</label>
         <delimiter> </delimiter>
         <fieldForLabel>Name</fieldForLabel>
         <fieldForValue>FredID</fieldForValue>
         <search>
           <query>| inputlookup FRED_Default_List where (Category="Exchange Rates" OR Category="Crypto*")  | table FredID, Name | sort FredID</query>
         </search>
-        <default>BAMLC0A1CAAA,BAMLC0A4CBBB</default>
+        <default>DEXUSEU,DEXUSUK</default>
+        <initialValue>DEXUSEU,DEXUSUK</initialValue>
       </input>
       <chart>
         <search>
@@ -180,7 +240,7 @@
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
         <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
-        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
         <option name="charting.axisTitleY.visibility">visible</option>
         <option name="charting.axisTitleY2.visibility">visible</option>
         <option name="charting.axisX.abbreviation">none</option>
@@ -214,35 +274,55 @@
     </panel>
   </row>
   <row>
-    <panel id="panel61_setWidth_70">
-      <title>$C_SERIES01_LABEL_TOK$</title>
+    <panel id="panelC101_setWidth_25">
       <input type="dropdown" token="C_SERIES01_TOK" searchWhenChanged="true">
         <label>Series</label>
         <fieldForLabel>Name</fieldForLabel>
         <fieldForValue>FredID</fieldForValue>
         <search>
-          <query>| inputlookup FRED_Default_List where (Category="Exchange Rates" OR Category="Crypto*")  | sort FredID asc</query>
+          <query>| inputlookup FRED_Default_List where (Category="Exchange Rates" OR Category="Crypto*") | sort FredID asc</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
         </search>
-        <default>DTWEXM</default>
-        <initialValue>DTWEXM</initialValue>
+        <default>CBBTCUSD</default>
+        <initialValue>CBBTCUSD</initialValue>
         <change>
           <!-- use predefined input tokens to set -->
           <!-- tokens for the selected label and value -->
           <set token="C_SERIES01_LABEL_TOK">$label$</set>
         </change>
       </input>
+      <table>
+        <search>
+          <query>| inputlookup FRED_Default_List Where FredID=$C_SERIES01_TOK$ | table Name, FredID,  Frequency, Description | transpose column_name="Field" | rename "row 1" as Value</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/fred_list_detail_drilldown?form.FredID=$C_SERIES01_TOK$</link>
+        </drilldown>
+      </table>
+    </panel>
+    <panel id="panelC102_setWidth_45">
       <chart>
-        <title>Daily Time Chart</title>
         <search>
           <query>index="fred_data" SeriesID=$C_SERIES01_TOK$ | chart avg(Value) as value by _time</query>
           <earliest>$time_tok.earliest$</earliest>
           <latest>$time_tok.latest$</latest>
+          <sampleRatio>1</sampleRatio>
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
         <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
-        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
         <option name="charting.axisTitleY.visibility">visible</option>
         <option name="charting.axisTitleY2.visibility">visible</option>
         <option name="charting.axisX.abbreviation">none</option>
@@ -274,15 +354,12 @@
         <option name="trellis.size">medium</option>
       </chart>
     </panel>
-    <panel id="panel201_setWidth_10">
-      <title>$C_SERIES01_LABEL_TOK$</title>
+    <panel id="panelC103_setWidth_10">
       <chart>
         <title>Range</title>
         <search>
-          <query>index="fred_data" $C_SERIES01_TOK$ | sort _time desc
+          <query>index="fred_data" SeriesID=$C_SERIES01_TOK$ | sort _time desc
 | stats max(Value) as Maximum, min(Value) as Minimum, first(Value) as Last_Value | gauge Last_Value,Minimum,Maximum</query>
-          <earliest>$time_tok.earliest$</earliest>
-          <latest>$time_tok.latest$</latest>
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
         <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
@@ -317,8 +394,7 @@
         <option name="trellis.size">medium</option>
       </chart>
     </panel>
-    <panel id="panel202_setWidth_20">
-      <title>$C_SERIES01_LABEL_TOK$</title>
+    <panel id="panelC104_setWidth_20">
       <chart>
         <title>Summary Statistics</title>
         <search>
@@ -374,35 +450,55 @@
     </panel>
   </row>
   <row>
-    <panel id="panel301_setWidth_70">
-      <title>$C_SERIES02_LABEL_TOK$</title>
+    <panel id="panelC201_setWidth_25">
       <input type="dropdown" token="C_SERIES02_TOK" searchWhenChanged="true">
         <label>Series</label>
         <fieldForLabel>Name</fieldForLabel>
         <fieldForValue>FredID</fieldForValue>
         <search>
-          <query>| inputlookup FRED_Default_List where (Category="Exchange Rates" OR Category="Crypto*")  | sort FredID asc</query>
+          <query>| inputlookup FRED_Default_List where (Category="Exchange Rates" OR Category="Crypto*") | sort FredID asc</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
         </search>
-        <default>CBBTCUSD</default>
-        <initialValue>CBBTCUSD</initialValue>
+        <default>CBETHUSD</default>
+        <initialValue>CBETHUSD</initialValue>
         <change>
           <!-- use predefined input tokens to set -->
           <!-- tokens for the selected label and value -->
           <set token="C_SERIES02_LABEL_TOK">$label$</set>
         </change>
       </input>
+      <table>
+        <search>
+          <query>| inputlookup FRED_Default_List Where FredID=$C_SERIES02_TOK$ | table Name, FredID,  Frequency, Description | transpose column_name="Field" | rename "row 1" as Value</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/fred_list_detail_drilldown?form.FredID=$C_SERIES02_TOK$</link>
+        </drilldown>
+      </table>
+    </panel>
+    <panel id="panelC202_setWidth_45">
       <chart>
-        <title>Daily Time Chart</title>
         <search>
           <query>index="fred_data" SeriesID=$C_SERIES02_TOK$ | chart avg(Value) as value by _time</query>
           <earliest>$time_tok.earliest$</earliest>
           <latest>$time_tok.latest$</latest>
+          <sampleRatio>1</sampleRatio>
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
         <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
-        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
         <option name="charting.axisTitleY.visibility">visible</option>
         <option name="charting.axisTitleY2.visibility">visible</option>
         <option name="charting.axisX.abbreviation">none</option>
@@ -434,15 +530,12 @@
         <option name="trellis.size">medium</option>
       </chart>
     </panel>
-    <panel id="panel302_setWidth_10">
-      <title>$C_SERIES02_LABEL_TOK$</title>
+    <panel id="panelC203_setWidth_10">
       <chart>
         <title>Range</title>
         <search>
-          <query>index="fred_data" $C_SERIES02_TOK$ | sort _time desc
+          <query>index="fred_data" SeriesID=$C_SERIES02_TOK$ | sort _time desc
 | stats max(Value) as Maximum, min(Value) as Minimum, first(Value) as Last_Value | gauge Last_Value,Minimum,Maximum</query>
-          <earliest>$time_tok.earliest$</earliest>
-          <latest>$time_tok.latest$</latest>
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
         <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
@@ -477,8 +570,7 @@
         <option name="trellis.size">medium</option>
       </chart>
     </panel>
-    <panel id="panel303_setWidth_20">
-      <title>$C_SERIES02_LABEL_TOK$</title>
+    <panel id="panelC204_setWidth_20">
       <chart>
         <title>Summary Statistics</title>
         <search>

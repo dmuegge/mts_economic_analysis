@@ -1,0 +1,33 @@
+<dashboard theme="dark">
+  <label>Getting Started</label>
+  <row>
+    <panel>
+      <title>Using Economic Analysis for Splunk</title>
+      <html>
+        
+        A fundamental aspect of this application to understand is how the data is organized.  
+        The FRED® Add-On for Splunk installs a kvstore list called FRED_Default_List. This list is used to store the FRED series ID's for which we want to retrieve data.
+        The FRED Add-On has a form for managing this list, but there is also a form to search and manage this list in this application. <br/><br/>
+        
+        Just click default-->FRED Default List in the application menu, as shown below.<br/><br/>
+        <img src="/static/app/mts_economic_analysis/help_fred_default_list_menulink01.png"></img>
+        
+        
+        <ul>
+          <li>
+          
+          </li>
+          <li>
+            
+          </li>
+          
+        </ul>
+        <br/>
+        <br/>
+        
+        
+        
+      </html>
+    </panel>
+  </row>
+</dashboard>

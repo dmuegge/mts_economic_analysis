@@ -560,7 +560,7 @@
       </single>
     </panel>
     <panel id="panel004_setWidth_10">
-      <title>10Y Treasury</title>
+      <title>$DGS10_NAME_TOK$</title>
       <single>
         <title>$DGS10_DT_TOK$ - TTM</title>
         <search base="all_rates_ttm_base">
@@ -581,7 +581,7 @@
       </single>
     </panel>
     <panel id="panel005_setWidth_10">
-      <title>10Y-2Y Spread</title>
+      <title>$T10Y2Y_NAME_TOK$</title>
       <single>
         <title>$T10Y2Y_DT_TOK$ - TTM</title>
         <search base="all_rates_ttm_base">
@@ -602,7 +602,7 @@
       </single>
     </panel>
     <panel id="panel006_setWidth_10">
-      <title>30Y Treasury</title>
+      <title>$DGS30_NAME_TOK$</title>
       <single>
         <title>$DGS30_DT_TOK$ - TTM</title>
         <search base="all_rates_ttm_base">
@@ -623,7 +623,7 @@
       </single>
     </panel>
     <panel id="panel007_setWidth_10">
-      <title>Fed Funds</title>
+      <title>$DFF_NAME_TOK$</title>
       <single>
         <title>$DFF_DT_TOK$ - TTM</title>
         <search base="all_rates_ttm_base">
@@ -644,7 +644,7 @@
       </single>
     </panel>
     <panel id="panel008_setWidth_10">
-      <title>30Y Mortgage</title>
+      <title>$MORTGAGE30US_NAME_TOK$</title>
       <single>
         <title>$MORTGAGE30US_DT_TOK$ - TTM</title>
         <search base="all_rates_ttm_base">

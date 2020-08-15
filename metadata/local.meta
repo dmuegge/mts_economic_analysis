@@ -13,7 +13,7 @@ modtime = 1596975772.187887500
 [views/economic_overview]
 owner = admin
 version = 8.0.4.1
-modtime = 1597058210.263398000
+modtime = 1597496684.415088000
 
 [views/fred_default_list]
 owner = admin
@@ -38,7 +38,7 @@ modtime = 1596908080.497990100
 [views/manufacturing_overview]
 owner = admin
 version = 8.0.4.1
-modtime = 1596970454.975452000
+modtime = 1597498174.121653800
 
 [views/fred_list_detail_drilldown]
 owner = admin

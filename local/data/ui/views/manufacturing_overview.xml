@@ -18,7 +18,7 @@
         <set token="AMTMNO_DT_TOK">$result.AMTMNO$</set>
         <set token="DGORDER_DT_TOK">$result.DGORDER$</set>
         <set token="MNFCTRIMSA_DT_TOK">$result.MNFCTRIMSA$</set>
-        <set token="MNFCTRIRS_DT_TOK">$result.MNFCTRIRS$</set>
+        <set token="MNFCTRIRSA_DT_TOK">$result.MNFCTRIRSA$</set>
         <set token="MNFCTRSMSA_DT_TOK">$result.MNFCTRSMSA$</set>
       </condition>
       <condition>

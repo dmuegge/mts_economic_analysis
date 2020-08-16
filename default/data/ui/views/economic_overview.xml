@@ -18,8 +18,8 @@
   </search>
   <search id="all_rates_ttm_base">
     <query>
-      index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Interest Rates") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
-| stats last(Value) as Value by _time SeriesID
+      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Interest Rates") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+| stats last(Value) as Value by _time SeriesID]]>
     </query>
     <earliest>-12mon</earliest>
     <latest>now</latest>
@@ -82,8 +82,8 @@
   </search>
   <search id="all_bonds_ttm_base">
     <query>
-      index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Corporate Bonds" OR Category="Bond Market Indexes") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
-| stats last(Value) as Value by _time SeriesID
+      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Corporate Bonds" OR Category="Bond Market Indexes") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+| stats last(Value) as Value by _time SeriesID]]>
     </query>
     <earliest>-12mon</earliest>
     <latest>now</latest>
@@ -124,8 +124,8 @@
   </search>
   <search id="all_currency_ttm_base">
     <query>
-      index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Exchange Rates" OR Category="Crypto*") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
-| stats last(Value) as Value by _time SeriesID
+      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Exchange Rates" OR Category="Crypto*") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+| stats last(Value) as Value by _time SeriesID]]>
     </query>
     <earliest>-12mon</earliest>
     <latest>now</latest>
@@ -162,8 +162,8 @@
   </search>
   <search id="all_monetary_ttm_base">
     <query>
-      index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Monetary Data") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
-| stats last(Value) as Value by _time SeriesID
+      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Monetary Data") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+| stats last(Value) as Value by _time SeriesID]]>
     </query>
     <earliest>-12mon</earliest>
     <latest>now</latest>
@@ -192,8 +192,8 @@
   </search>
   <search id="all_commodities_ttm_base">
     <query>
-      index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Commodities") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
-| stats last(Value) as Value by _time SeriesID
+      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Commodities") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+| stats last(Value) as Value by _time SeriesID]]>
     </query>
     <earliest>-12mon</earliest>
     <latest>now</latest>
@@ -236,8 +236,8 @@
   </search>
   <search id="all_equities_ttm_base">
     <query>
-      index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Stock Market Indexes") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
-| stats last(Value) as Value by _time SeriesID
+      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Stock Market Indexes") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+| stats last(Value) as Value by _time SeriesID]]>
     </query>
     <earliest>-12mon</earliest>
     <latest>now</latest>
@@ -284,8 +284,8 @@
   </search>
   <search id="all_employment_ttm_base">
     <query>
-      index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Employment") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
-| stats last(Value) as Value by _time SeriesID
+      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Employment") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+| stats last(Value) as Value by _time SeriesID]]>
     </query>
     <earliest>-12mon</earliest>
     <latest>now</latest>
@@ -318,8 +318,8 @@
   </search>
   <search id="all_consumer_ttm_base">
     <query>
-      index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Consumer") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
-| stats last(Value) as Value by _time SeriesID
+      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Consumer") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+| stats last(Value) as Value by _time SeriesID]]>
     </query>
     <earliest>-12mon</earliest>
     <latest>now</latest>
@@ -348,8 +348,8 @@
   </search>
   <search id="all_manufacturing_ttm_base">
     <query>
-      index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Manufacturing") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
-| stats last(Value) as Value by _time SeriesID
+      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Manufacturing") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+| stats last(Value) as Value by _time SeriesID]]>
     </query>
     <earliest>-12mon</earliest>
     <latest>now</latest>
@@ -382,8 +382,8 @@
   </search>
   <search id="all_housing_ttm_base">
     <query>
-      index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Housing") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
-| stats last(Value) as Value by _time SeriesID
+      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Housing") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+| stats last(Value) as Value by _time SeriesID]]>
     </query>
     <earliest>-12mon</earliest>
     <latest>now</latest>
@@ -416,23 +416,7 @@
   </search>
   <row>
     <panel>
-      <!--
-      Panel Token Name Legend
-      Interest Rates and Bonds - show_rates_bonds
-      "{&quot;show_currency_monetary&quot;: null, &quot;show_commodities_equities&quot;: null, &quot;show_employment_consumer&quot;: null, &quot;show_manufacturing_housing&quot;: null}"
-
-      Currency and Monetary - show_currency_monetary
-      "{&quot;show_rates_bonds&quot;: null, &quot;show_commodities_equities&quot;: null, &quot;show_employment_consumer&quot;: null, &quot;show_manufacturing_housing&quot;: null}"
-
-      Commodities and Equities show_commodities_equities
-      "{&quot;show_currency_monetary&quot;: null, &quot;show_rates_bonds&quot;: null, &quot;show_employment_consumer&quot;: null, &quot;show_manufacturing_housing&quot;: null}"
-
-      Employment and Consumer - show_employment_consumer
-      "{&quot;show_currency_monetary&quot;: null, &quot;show_commodities_equities&quot;: null, &quot;show_rates_bonds&quot;: null, &quot;show_manufacturing_housing&quot;: null}"
-
-      Manufacturing_Housing - show_manufacturing_housing
-      "{&quot;show_currency_monetary&quot;: null, &quot;show_commodities_equities&quot;: null, &quot;show_employment_consumer&quot;: null, &quot;show_rates_bonds&quot;: null}"
-    -->
+   
       <html id="top_row">
     <a href="#" class="btn-pill" data-set-token="show_rates_bonds" data-value="show" data-token-json="{&quot;show_currency_monetary&quot;: null, &quot;show_commodities_equities&quot;: null, &quot;show_employment_consumer&quot;: null, &quot;show_manufacturing_housing&quot;: null}">
       Interest Rates &amp; Bonds

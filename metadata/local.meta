@@ -8,7 +8,7 @@ modtime = 1595468252.281512800
 
 [nav/default]
 version = 8.0.4.1
-modtime = 1596975772.187887500
+modtime = 1598716224.601636000
 
 [views/economic_overview]
 owner = admin
@@ -78,7 +78,7 @@ modtime = 1596928384.727144400
 [views/introduction]
 owner = admin
 version = 8.0.4.1
-modtime = 1596994604.120218400
+modtime = 1598733486.750728100
 
 [views/main_help]
 owner = admin
@@ -95,9 +95,21 @@ modtime = 1596277275.968483500
 [views/getting_started]
 owner = admin
 version = 8.0.4.1
-modtime = 1596975310.085176100
+modtime = 1598719252.187040800
 
 [views/adding_a_data_series]
 owner = admin
 version = 8.0.4.1
-modtime = 1596975589.722465900
+modtime = 1598719826.260434900
+
+[macros/mts_econ_indexes]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = nobody
+version = 8.0.4.1
+modtime = 1598714705.772526400
+
+[views/application_guide]
+owner = admin
+version = 8.0.4.1
+modtime = 1598726512.974524700

@@ -2,7 +2,7 @@
   <label>Interest Rates</label>
   <search id="all_rates_ttm_base">
     <query>
-      index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Interest Rates" OR Category="Commercial Paper") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+      `mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Interest Rates" OR Category="Commercial Paper") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
 | stats last(Value) as Value by _time SeriesID
     </query>
     <earliest>-12mon</earliest>
@@ -10,7 +10,7 @@
   </search>
   <search>
     <query>
-      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Interest Rates" OR Category="Commercial Paper") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Interest Rates" OR Category="Commercial Paper") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
     </query>
     <done>
       <condition match=" 'job.resultCount' &gt; 0">
@@ -38,7 +38,7 @@
   </search>
   <search>
     <query>
-      <![CDATA[index="fred_data" SeriesID="DGS*" | sort Date desc | fields + Date | head 1 | table Date]]>
+      <![CDATA[`mts_econ_indexes` SeriesID="DGS*" | sort Date desc | fields + Date | head 1 | table Date]]>
     </query>
     <done>
       <condition match=" 'job.resultCount' &gt; 0">
@@ -51,7 +51,7 @@
   </search>
   <search id="fred_ir_base">
     <query>
-      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Interest Rates" OR Category="Commercial Paper") | fields FredID | mvcombine FredID | eval seriesid=mvjoin(FredID,",") | return $seriesid]) | fields *]]>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Interest Rates" OR Category="Commercial Paper") | fields FredID | mvcombine FredID | eval seriesid=mvjoin(FredID,",") | return $seriesid]) | fields *]]>
     </query>
     <earliest>$time_tok.earliest$</earliest>
     <latest>$time_tok.latest$</latest>
@@ -72,7 +72,7 @@
       <chart>
         <search>
           <query>
-            <![CDATA[index="fred_data" SeriesID IN (DGS1MO,DGS3MO,DGS6MO,DGS1,DGS2,DGS3,DGS5,DGS7,DGS10,DGS20,DGS30) 
+            <![CDATA[`mts_econ_indexes` SeriesID IN (DGS1MO,DGS3MO,DGS6MO,DGS1,DGS2,DGS3,DGS5,DGS7,DGS10,DGS20,DGS30) 
 | eval Maturity=case(SeriesID == "DGS1MO", 1, SeriesID == "DGS3MO", 3, SeriesID == "DGS6MO", 6, SeriesID == "DGS1", 12, SeriesID == "DGS2", 24, SeriesID == "DGS3", 36, SeriesID == "DGS5", 60, SeriesID == "DGS7", 84, SeriesID == "DGS10", 120, SeriesID == "DGS20", 240, SeriesID == "DGS30", 360) 
 | rename Value as Yield | sort Date desc| chart first(Yield) as Yield by Maturity]]>
           </query>
@@ -248,7 +248,7 @@
       </input>
       <chart>
         <search>
-          <query>index="fred_data" SeriesID IN ($IR_COMP_SERIES_TOK$) | chart avg(Value) as value by _time SeriesID</query>
+          <query>`mts_econ_indexes` SeriesID IN ($IR_COMP_SERIES_TOK$) | chart avg(Value) as value by _time SeriesID</query>
           <earliest>$time_tok.earliest$</earliest>
           <latest>$time_tok.latest$</latest>
           <sampleRatio>1</sampleRatio>
@@ -329,7 +329,7 @@
     <panel id="panelIR102_setWidth_45">
       <chart>
         <search>
-          <query>index="fred_data" SeriesID=$IR_SERIES01_TOK$ | chart avg(Value) as value by _time</query>
+          <query>`mts_econ_indexes` SeriesID=$IR_SERIES01_TOK$ | chart avg(Value) as value by _time</query>
           <earliest>$time_tok.earliest$</earliest>
           <latest>$time_tok.latest$</latest>
           <sampleRatio>1</sampleRatio>
@@ -372,7 +372,7 @@
       <chart>
         <title>Range</title>
         <search>
-          <query>index="fred_data" SeriesID=$IR_SERIES01_TOK$ | sort _time desc
+          <query>`mts_econ_indexes` SeriesID=$IR_SERIES01_TOK$ | sort _time desc
 | stats max(Value) as Maximum, min(Value) as Minimum, first(Value) as Last_Value | gauge Last_Value,Minimum,Maximum</query>
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
@@ -412,7 +412,7 @@
       <chart>
         <title>Summary Statistics</title>
         <search>
-          <query>index="fred_data" SeriesID=$IR_SERIES01_TOK$ 
+          <query>`mts_econ_indexes` SeriesID=$IR_SERIES01_TOK$ 
 | stats avg(Value) as Average, median(Value) as "Median", stdev(Value) as "STDEV", max(Value) as Maximum, min(Value) as Minimum
 | eval Average=round(Average, 2)
 | eval Median=round(Median, 2)
@@ -505,7 +505,7 @@
     <panel id="panelIR202_setWidth_45">
       <chart>
         <search>
-          <query>index="fred_data" SeriesID=$IR_SERIES02_TOK$ | chart avg(Value) as value by _time</query>
+          <query>`mts_econ_indexes` SeriesID=$IR_SERIES02_TOK$ | chart avg(Value) as value by _time</query>
           <earliest>$time_tok.earliest$</earliest>
           <latest>$time_tok.latest$</latest>
           <sampleRatio>1</sampleRatio>
@@ -548,7 +548,7 @@
       <chart>
         <title>Range</title>
         <search>
-          <query>index="fred_data" SeriesID=$IR_SERIES02_TOK$ | sort _time desc
+          <query>`mts_econ_indexes` SeriesID=$IR_SERIES02_TOK$ | sort _time desc
 | stats max(Value) as Maximum, min(Value) as Minimum, first(Value) as Last_Value | gauge Last_Value,Minimum,Maximum</query>
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
@@ -588,7 +588,7 @@
       <chart>
         <title>Summary Statistics</title>
         <search>
-          <query>index="fred_data" SeriesID=$IR_SERIES02_TOK$ 
+          <query>`mts_econ_indexes` SeriesID=$IR_SERIES02_TOK$ 
 | stats avg(Value) as Average, median(Value) as "Median", stdev(Value) as "STDEV", max(Value) as Maximum, min(Value) as Minimum
 | eval Average=round(Average, 2)
 | eval Median=round(Median, 2)

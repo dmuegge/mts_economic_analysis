@@ -2,7 +2,7 @@
   <label>Monetary</label>
   <search id="all_monetary_ttm_base">
     <query>
-      index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Monetary Data") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+      `mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Monetary Data") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
 | stats last(Value) as Value by _time SeriesID
     </query>
     <earliest>-12mon</earliest>
@@ -10,7 +10,7 @@
   </search>
   <search>
     <query>
-      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Monetary Data") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Monetary Data") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
     </query>
     <done>
       <condition match=" 'job.resultCount' &gt; 0">
@@ -218,7 +218,7 @@
       </input>
       <chart>
         <search>
-          <query>index="fred_data" SeriesID IN ($IR_COMP_SERIES_TOK$) | chart avg(Value) as value by _time SeriesID</query>
+          <query>`mts_econ_indexes` SeriesID IN ($IR_COMP_SERIES_TOK$) | chart avg(Value) as value by _time SeriesID</query>
           <earliest>$time_tok.earliest$</earliest>
           <latest>$time_tok.latest$</latest>
           <sampleRatio>1</sampleRatio>
@@ -300,7 +300,7 @@
     <panel id="panelM02_setWidth_45">
       <chart>
         <search>
-          <query>index="fred_data" SeriesID=$M_SERIES01_TOK$ | chart avg(Value) as value by _time</query>
+          <query>`mts_econ_indexes` SeriesID=$M_SERIES01_TOK$ | chart avg(Value) as value by _time</query>
           <earliest>$time_tok.earliest$</earliest>
           <latest>$time_tok.latest$</latest>
           <sampleRatio>1</sampleRatio>
@@ -343,7 +343,7 @@
       <chart>
         <title>Range</title>
         <search>
-          <query>index="fred_data" SeriesID=$M_SERIES01_TOK$ | sort _time desc
+          <query>`mts_econ_indexes` SeriesID=$M_SERIES01_TOK$ | sort _time desc
 | stats max(Value) as Maximum, min(Value) as Minimum, first(Value) as Last_Value | gauge Last_Value,Minimum,Maximum</query>
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
@@ -383,7 +383,7 @@
       <chart>
         <title>Summary Statistics</title>
         <search>
-          <query>index="fred_data" SeriesID=$M_SERIES01_TOK$ 
+          <query>`mts_econ_indexes` SeriesID=$M_SERIES01_TOK$ 
 | stats avg(Value) as Average, median(Value) as "Median", stdev(Value) as "STDEV", max(Value) as Maximum, min(Value) as Minimum
 | eval Average=round(Average, 2)
 | eval Median=round(Median, 2)
@@ -476,7 +476,7 @@
     <panel id="panelM202_setWidth_45">
       <chart>
         <search>
-          <query>index="fred_data" SeriesID=$M_SERIES02_TOK$ | chart avg(Value) as value by _time</query>
+          <query>`mts_econ_indexes` SeriesID=$M_SERIES02_TOK$ | chart avg(Value) as value by _time</query>
           <earliest>$time_tok.earliest$</earliest>
           <latest>$time_tok.latest$</latest>
           <sampleRatio>1</sampleRatio>
@@ -519,7 +519,7 @@
       <chart>
         <title>Range</title>
         <search>
-          <query>index="fred_data" SeriesID=$M_SERIES02_TOK$ | sort _time desc
+          <query>`mts_econ_indexes` SeriesID=$M_SERIES02_TOK$ | sort _time desc
 | stats max(Value) as Maximum, min(Value) as Minimum, first(Value) as Last_Value | gauge Last_Value,Minimum,Maximum</query>
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
@@ -559,7 +559,7 @@
       <chart>
         <title>Summary Statistics</title>
         <search>
-          <query>index="fred_data" SeriesID=$M_SERIES02_TOK$ 
+          <query>`mts_econ_indexes` SeriesID=$M_SERIES02_TOK$ 
 | stats avg(Value) as Average, median(Value) as "Median", stdev(Value) as "STDEV", max(Value) as Maximum, min(Value) as Minimum
 | eval Average=round(Average, 2)
 | eval Median=round(Median, 2)

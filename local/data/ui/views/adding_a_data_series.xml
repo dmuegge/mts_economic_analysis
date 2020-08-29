@@ -1,0 +1,29 @@
+<dashboard theme="dark">
+  <label>Adding a Data Series</label>
+  <row>
+    <panel>
+      <title>Getting new data from FRED</title>
+      <html>
+        
+        The FRED Add-On has a form for managing the default series list, but there is also a form to search and manage the list in this application.
+        <br/>
+        <br/>
+        
+        Just click default-->FRED Default List in the application menu, as shown below.<br/><br/>
+        <img src="/static/app/mts_economic_analysis/help_fred_default_list_menulink01.png"></img><br/><br/>
+        
+        The default list management view is then displayed, as shown below.<br/><br/>
+        <img src="/static/app/mts_economic_analysis/help_fred_default_list_view01.png"></img><br/><br/>
+        
+        List items can then be added, deleted, and changed. The information in the list comes from the FRED website at <a href="https://fred.stlouisfed.org/">https://fred.stlouisfed.org/</a>.
+        Each FRED series at the site will have the information required to add to the list. A sample FRED series page is showm below with the list information called out.<br/><br/>
+        <img src="/static/app/mts_economic_analysis/help_fred_series_example_page.png"></img><br/><br/>
+   
+        <br/>
+        <br/>
+        
+        
+      </html>
+    </panel>
+  </row>
+</dashboard>

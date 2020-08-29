@@ -44,6 +44,7 @@
   <collection label="Help">
     <view name="introduction" />
     <view name="getting_started" />
+    <view name="application_guide" />
     <view name="adding_a_data_series" />
   </collection>
   

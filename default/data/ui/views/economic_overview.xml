@@ -5,7 +5,7 @@
   </init>
   <search>
     <query>
-      <![CDATA[index="fred_data" SeriesID="DGS*" | sort Date desc | fields + Date | head 1 | table Date]]>
+      <![CDATA[`mts_econ_indexes` SeriesID="DGS*" | sort Date desc | fields + Date | head 1 | table Date]]>
     </query>
     <done>
       <condition match=" 'job.resultCount' &gt; 0">
@@ -18,7 +18,7 @@
   </search>
   <search id="all_rates_ttm_base">
     <query>
-      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Interest Rates") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Interest Rates") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
 | stats last(Value) as Value by _time SeriesID]]>
     </query>
     <earliest>-12mon</earliest>
@@ -26,7 +26,7 @@
   </search>
   <search>
     <query>
-      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Interest Rates") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Interest Rates") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
     </query>
     <done>
       <condition match=" 'job.resultCount' &gt; 0">
@@ -82,7 +82,7 @@
   </search>
   <search id="all_bonds_ttm_base">
     <query>
-      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Corporate Bonds" OR Category="Bond Market Indexes") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Corporate Bonds" OR Category="Bond Market Indexes") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
 | stats last(Value) as Value by _time SeriesID]]>
     </query>
     <earliest>-12mon</earliest>
@@ -90,7 +90,7 @@
   </search>
   <search>
     <query>
-      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Corporate Bonds" OR Category="Bond Market Indexes") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Corporate Bonds" OR Category="Bond Market Indexes") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
     </query>
     <done>
       <condition match=" 'job.resultCount' &gt; 0">
@@ -124,7 +124,7 @@
   </search>
   <search id="all_currency_ttm_base">
     <query>
-      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Exchange Rates" OR Category="Crypto*") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Exchange Rates" OR Category="Crypto*") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
 | stats last(Value) as Value by _time SeriesID]]>
     </query>
     <earliest>-12mon</earliest>
@@ -132,7 +132,7 @@
   </search>
   <search>
     <query>
-      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Exchange Rates" OR Category="Crypto*") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Exchange Rates" OR Category="Crypto*") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
     </query>
     <done>
       <condition match=" 'job.resultCount' &gt; 0">
@@ -162,7 +162,7 @@
   </search>
   <search id="all_monetary_ttm_base">
     <query>
-      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Monetary Data") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Monetary Data") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
 | stats last(Value) as Value by _time SeriesID]]>
     </query>
     <earliest>-12mon</earliest>
@@ -170,7 +170,7 @@
   </search>
   <search>
     <query>
-      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Monetary Data") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Monetary Data") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
     </query>
     <done>
       <condition match=" 'job.resultCount' &gt; 0">
@@ -192,7 +192,7 @@
   </search>
   <search id="all_commodities_ttm_base">
     <query>
-      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Commodities") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Commodities") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
 | stats last(Value) as Value by _time SeriesID]]>
     </query>
     <earliest>-12mon</earliest>
@@ -200,7 +200,7 @@
   </search>
   <search>
     <query>
-      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Commodities") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Commodities") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
     </query>
     <done>
       <condition match=" 'job.resultCount' &gt; 0">
@@ -236,7 +236,7 @@
   </search>
   <search id="all_equities_ttm_base">
     <query>
-      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Stock Market Indexes") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Stock Market Indexes") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
 | stats last(Value) as Value by _time SeriesID]]>
     </query>
     <earliest>-12mon</earliest>
@@ -244,7 +244,7 @@
   </search>
   <search>
     <query>
-      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Stock Market Indexes") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Stock Market Indexes") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
     </query>
     <done>
       <condition match=" 'job.resultCount' &gt; 0">
@@ -264,7 +264,7 @@
   </search>
   <search>
     <query>
-      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Stock Market Indexes") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Value | transpose 0 column_name=SeriesID header_field=SeriesID | head 1 | fields - SeriesID]]>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Stock Market Indexes") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Value | transpose 0 column_name=SeriesID header_field=SeriesID | head 1 | fields - SeriesID]]>
     </query>
     <done>
       <condition match=" 'job.resultCount' &gt; 0">
@@ -284,7 +284,7 @@
   </search>
   <search id="all_employment_ttm_base">
     <query>
-      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Employment") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Employment") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
 | stats last(Value) as Value by _time SeriesID]]>
     </query>
     <earliest>-12mon</earliest>
@@ -292,7 +292,7 @@
   </search>
   <search>
     <query>
-      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Employment") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Employment") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
     </query>
     <done>
       <condition match=" 'job.resultCount' &gt; 0">
@@ -318,7 +318,7 @@
   </search>
   <search id="all_consumer_ttm_base">
     <query>
-      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Consumer") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Consumer") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
 | stats last(Value) as Value by _time SeriesID]]>
     </query>
     <earliest>-12mon</earliest>
@@ -326,7 +326,7 @@
   </search>
   <search>
     <query>
-      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Consumer") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Consumer") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
     </query>
     <done>
       <condition match=" 'job.resultCount' &gt; 0">
@@ -348,7 +348,7 @@
   </search>
   <search id="all_manufacturing_ttm_base">
     <query>
-      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Manufacturing") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Manufacturing") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
 | stats last(Value) as Value by _time SeriesID]]>
     </query>
     <earliest>-12mon</earliest>
@@ -356,7 +356,7 @@
   </search>
   <search>
     <query>
-      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Manufacturing") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Manufacturing") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
     </query>
     <done>
       <condition match=" 'job.resultCount' &gt; 0">
@@ -382,7 +382,7 @@
   </search>
   <search id="all_housing_ttm_base">
     <query>
-      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Housing") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Housing") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
 | stats last(Value) as Value by _time SeriesID]]>
     </query>
     <earliest>-12mon</earliest>
@@ -390,7 +390,7 @@
   </search>
   <search>
     <query>
-      <![CDATA[index="fred_data" SeriesID IN ([| inputlookup FRED_Default_List where (Category="Housing") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Housing") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
     </query>
     <done>
       <condition match=" 'job.resultCount' &gt; 0">

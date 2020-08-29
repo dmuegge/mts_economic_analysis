@@ -1,0 +1,58 @@
+<dashboard theme="dark">
+  <label>Introduction</label>
+  <row>
+    <panel>
+      <title>Welcome to Economic Analysis for Splunk!</title>
+      <html>
+        The goal of this application is to provide users of Splunk access to public economic data.<br/>
+        <br/>
+        
+        The first and primary data source this application utilizes is FRED®, which is the Federal Reserve Economic Database. It is a widely used source of economic data and has a wealth of information.
+        There are hundreds of data sources available from this repository this application uses many, which include the following:
+        <ul>
+          <li>
+            Board of Governors of the Federal Reserve System (US)
+          </li>
+          <li>
+            U.S. Department of the Treasury
+          </li>
+          <li>
+            U.S. Bureau of Economic Analysis
+          </li>
+          <li>
+            U.S. Bureau of Labor Statistics
+          </li>
+          <li>
+            U.S. Bureau of Transportation Statistics
+          </li>
+          <li>
+            National Bureau of Economic Research
+          </li>
+          <li>
+            U.S. Census Bureau
+          </li>
+          <li>
+            S&amp;P Dow Jones Indices LLC
+          </li>
+          <li>
+            NASDAQ OMX Group
+          </li>
+        </ul>
+        <br/>
+        <br/>
+        "This product uses the FRED® API but is not endorsed or certified by the Federal Reserve Bank of St. Louis."<br/>
+        <a href="https://fred.stlouisfed.org/docs/api/terms_of_use.html">https://fred.stlouisfed.org/docs/api/terms_of_use.html</a><br/><br/>
+        
+        
+        Using the FRED Add-On for Splunk to easily index the FRED data will make the data available to this application. The default data sources will populate the prebuilt
+        dashboards, but additional data sources can be added and additional dashboards created.<br/><br/>
+        
+        Other data sources may be added to this application in the future based on the availability of additional applicable add-ons.<br/><br/>
+        
+        
+        Next--> <a href="getting_started">Getting Started</a>
+        
+      </html>
+    </panel>
+  </row>
+</dashboard>

@@ -56,7 +56,7 @@
       <chart>
         <title>Range</title>
         <search>
-          <query>index="fred_data" $SERIES01_ID_TOK$ | sort _time desc
+          <query>`mts_econ_indexes` $SERIES01_ID_TOK$ | sort _time desc
 | stats max(Value) as Maximum, min(Value) as Minimum, first(Value) as Last_Value | gauge Last_Value,Minimum,Maximum</query>
           <earliest>$time_tok.earliest$</earliest>
           <latest>$time_tok.latest$</latest>
@@ -99,7 +99,7 @@
       <chart>
         <title>Summary Statistics</title>
         <search>
-          <query>index="fred_data" SeriesID=$SERIES01_ID_TOK$ 
+          <query>`mts_econ_indexes` SeriesID=$SERIES01_ID_TOK$ 
 | stats avg(Value) as Average, median(Value) as "Median", stdev(Value) as "STDEV", max(Value) as Maximum, min(Value) as Minimum
 | eval Average=round(Average, 2)
 | eval Median=round(Median, 2)
@@ -154,7 +154,7 @@
     <panel>
       <chart>
         <search>
-          <query>index="fred_data" $SERIES01_ID_TOK$ | chart avg(Value) as value by _time</query>
+          <query>`mts_econ_indexes` $SERIES01_ID_TOK$ | chart avg(Value) as value by _time</query>
           <earliest>$time_tok.earliest$</earliest>
           <latest>$time_tok.latest$</latest>
           <sampleRatio>1</sampleRatio>

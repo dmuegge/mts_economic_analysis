@@ -1,0 +1,2230 @@
+<dashboard script="autodiscover.js, tokenlinks.js" stylesheet="auto_resize_input.css,economic_overview.css" theme="dark">
+  <label>Economic Overview</label>
+  <init>
+    <set token="show_rates_bonds">show</set>
+  </init>
+  <search>
+    <query>
+      <![CDATA[`mts_econ_indexes` SeriesID="DGS*" | sort Date desc | fields + Date | head 1 | table Date]]>
+    </query>
+    <done>
+      <condition match=" 'job.resultCount' &gt; 0">
+        <set token="TITLE_DT_TOK">$result.Date$</set>
+      </condition>
+      <condition>
+        <set token="TITLE_DT_TOK">"No Data"</set>
+      </condition>
+    </done>
+  </search>
+  <search id="all_rates_ttm_base">
+    <query>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Interest Rates") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+| stats last(Value) as Value by _time SeriesID]]>
+    </query>
+    <earliest>-12mon</earliest>
+    <latest>now</latest>
+  </search>
+  <search>
+    <query>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Interest Rates") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
+    </query>
+    <done>
+      <condition match=" 'job.resultCount' &gt; 0">
+        <set token="DGS2_DT_TOK">$result.DGS2$</set>
+        <set token="DGS5_DT_TOK">$result.DGS5$</set>
+        <set token="DGS10_DT_TOK">$result.DGS10$</set>
+        <set token="T10Y2Y_DT_TOK">$result.T10Y2Y$</set>
+        <set token="DGS30_DT_TOK">$result.DGS30$</set>
+        <set token="DFF_DT_TOK">$result.DFF$</set>
+        <set token="MORTGAGE30US_DT_TOK">$result.MORTGAGE30US$</set>
+      </condition>
+      <condition>
+        <set token="DGS2_DT_TOK">"No Data"</set>
+        <set token="DGS5_DT_TOK">"No Data"</set>
+        <set token="DGS10_DT_TOK">"No Data"</set>
+        <set token="T10Y2Y_DT_TOK">"No Data"</set>
+        <set token="DGS30_DT_TOK">"No Data"</set>
+        <set token="DFF_DT_TOK">"No Data"</set>
+        <set token="MORTGAGE30US_DT_TOK">"No Data"</set>
+      </condition>
+    </done>
+    <earliest>-7d</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  <search>
+    <query>
+      <![CDATA[| inputlookup FRED_Default_List where (Category="Interest Rates") | table FredID Name | transpose 0 column_name=FredID header_field=FredID  | fields - FredID]]>
+    </query>
+    <done>
+      <condition match=" 'job.resultCount' &gt; 0">
+        <set token="DGS2_NAME_TOK">$result.DGS2$</set>
+        <set token="DGS5_NAME_TOK">$result.DGS5$</set>
+        <set token="DGS10_NAME_TOK">$result.DGS10$</set>
+        <set token="T10Y2Y_NAME_TOK">$result.T10Y2Y$</set>
+        <set token="DGS30_NAME_TOK">$result.DGS30$</set>
+        <set token="DFF_NAME_TOK">$result.DFF$</set>
+        <set token="MORTGAGE30US_NAME_TOK">$result.MORTGAGE30US$</set>
+      </condition>
+      <condition>
+        <set token="DGS2_NAME_TOK">"No Data"</set>
+        <set token="DGS5_NAME_TOK">"No Data"</set>
+        <set token="DGS10_NAME_TOK">"No Data"</set>
+        <set token="T10Y2Y_NAME_TOK">"No Data"</set>
+        <set token="DGS30_NAME_TOK">"No Data"</set>
+        <set token="DFF_NAME_TOK">"No Data"</set>
+        <set token="MORTGAGE30US_NAME_TOK">"No Data"</set>
+      </condition>
+    </done>
+    <earliest>-7d</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  <search id="all_bonds_ttm_base">
+    <query>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Corporate Bonds" OR Category="Bond Market Indexes") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+| stats last(Value) as Value by _time SeriesID]]>
+    </query>
+    <earliest>-12mon</earliest>
+    <latest>now</latest>
+  </search>
+  <search>
+    <query>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Corporate Bonds" OR Category="Bond Market Indexes") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
+    </query>
+    <done>
+      <condition match=" 'job.resultCount' &gt; 0">
+        <set token="BAMLC0A1CAAAEY_DT_TOK">$result.BAMLC0A1CAAAEY$</set>
+        <set token="BAMLC0A4CBBBEY_DT_TOK">$result.BAMLC0A4CBBBEY$</set>
+        <set token="BAMLH0A0HYM2EY_DT_TOK">$result.BAMLH0A0HYM2EY$</set>
+        <set token="DAAA_DT_TOK">$result.DAAA$</set>
+        <set token="DBAA_DT_TOK">$result.DBAA$</set>
+        <set token="BAMLC0A1CAAA_DT_TOK">$result.BAMLC0A1CAAA$</set>
+        <set token="BAMLC0A4CBBB_DT_TOK">$result.BAMLC0A4CBBB$</set>
+        <set token="BAMLH0A0HYM2_DT_TOK">$result.BAMLH0A0HYM2$</set>
+        <set token="BAMLH0A3HYC_DT_TOK">$result.BAMLH0A3HYC$</set>
+        <set token="BAMLCC0A0CMTRIV_DT_TOK">$result.BAMLCC0A0CMTRIV$</set>
+      </condition>
+      <condition>
+        <set token="BAMLC0A1CAAAEY_DT_TOK">"No Data"</set>
+        <set token="BAMLC0A4CBBBEY_DT_TOK">"No Data"</set>
+        <set token="BAMLH0A0HYM2EY_DT_TOK">"No Data"</set>
+        <set token="DAAA_DT_TOK">"No Data"</set>
+        <set token="DBAA_DT_TOK">"No Data"</set>
+        <set token="BAMLC0A1CAAA_DT_TOK">"No Data"</set>
+        <set token="BAMLC0A4CBBB_DT_TOK">"No Data"</set>
+        <set token="BAMLH0A0HYM2_DT_TOK">"No Data"</set>
+        <set token="BAMLH0A3HYC_DT_TOK">"No Data"</set>
+        <set token="BAMLCC0A0CMTRIV_DT_TOK">"No Data"</set>
+      </condition>
+    </done>
+    <earliest>-7d</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  <search id="all_currency_ttm_base">
+    <query>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Exchange Rates" OR Category="Crypto*") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+| stats last(Value) as Value by _time SeriesID]]>
+    </query>
+    <earliest>-12mon</earliest>
+    <latest>now</latest>
+  </search>
+  <search>
+    <query>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Exchange Rates" OR Category="Crypto*") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
+    </query>
+    <done>
+      <condition match=" 'job.resultCount' &gt; 0">
+        <set token="DEXUSEU_DT_TOK">$result.DEXUSEU$</set>
+        <set token="DEXUSUK_DT_TOK">$result.DEXUSUK$</set>
+        <set token="DEXCHUS_DT_TOK">$result.DEXCHUS$</set>
+        <set token="DEXJPUS_DT_TOK">$result.DEXJPUS$</set>
+        <set token="DEXCAUS_DT_TOK">$result.DEXCAUS$</set>
+        <set token="DEXUSAL_DT_TOK">$result.DEXUSAL$</set>
+        <set token="DEXMXUS_DT_TOK">$result.DEXMXUS$</set>
+        <set token="CBBTCUSD_DT_TOK">$result.CBBTCUSD$</set>
+      </condition>
+      <condition>
+        <set token="DEXUSEU_DT_TOK">"No Data"</set>
+        <set token="DEXUSUK_DT_TOK">"No Data"</set>
+        <set token="DEXCHUS_DT_TOK">"No Data"</set>
+        <set token="DEXJPUS_DT_TOK">"No Data"</set>
+        <set token="DEXCAUS_DT_TOK">"No Data"</set>
+        <set token="DEXUSAL_DT_TOK">"No Data"</set>
+        <set token="DEXMXUS_DT_TOK">"No Data"</set>
+        <set token="CBBTCUSD_DT_TOK">"No Data"</set>
+      </condition>
+    </done>
+    <earliest>-30d</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  <search id="all_monetary_ttm_base">
+    <query>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Monetary Data") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+| stats last(Value) as Value by _time SeriesID]]>
+    </query>
+    <earliest>-12mon</earliest>
+    <latest>now</latest>
+  </search>
+  <search>
+    <query>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Monetary Data") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
+    </query>
+    <done>
+      <condition match=" 'job.resultCount' &gt; 0">
+        <set token="M1_DT_TOK">$result.M1$</set>
+        <set token="M2_DT_TOK">$result.M2$</set>
+        <set token="RPONTTLD_DT_TOK">$result.RPONTTLD$</set>
+        <set token="RRPONTTLD_DT_TOK">$result.RRPONTTLD$</set>
+      </condition>
+      <condition>
+        <set token="M1_DT_TOK">"No Data"</set>
+        <set token="M2_DT_TOK">"No Data"</set>
+        <set token="RPONTTLD_DT_TOK">"No Data"</set>
+        <set token="RRPONTTLD_DT_TOK">"No Data"</set>
+      </condition>
+    </done>
+    <earliest>-30d</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  <search id="all_commodities_ttm_base">
+    <query>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Commodities") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+| stats last(Value) as Value by _time SeriesID]]>
+    </query>
+    <earliest>-12mon</earliest>
+    <latest>now</latest>
+  </search>
+  <search>
+    <query>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Commodities") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
+    </query>
+    <done>
+      <condition match=" 'job.resultCount' &gt; 0">
+        <set token="DCOILWTICO_DT_TOK">$result.DCOILWTICO$</set>
+        <set token="DCOILBRENTEU_DT_TOK">$result.DCOILBRENTEU$</set>
+        <set token="DDFUELLA_DT_TOK">$result.DDFUELLA$</set>
+        <set token="DDFUELNYH_DT_TOK">$result.DDFUELNYH$</set>
+        <set token="DJFUELUSGULF_DT_TOK">$result.DJFUELUSGULF$</set>
+        <set token="DHOILNYH_DT_TOK">$result.DHOILNYH$</set>
+        <set token="DHHNGSP_DT_TOK">$result.DHHNGSP$</set>
+        <set token="DGASUSGULF_DT_TOK">$result.DGASUSGULF$</set>
+        <set token="DGASNYH_DT_TOK">$result.DGASNYH$</set>
+      </condition>
+      <condition>
+        <set token="DCOILWTICO_DT_TOK">"No Data"</set>
+        <set token="DCOILBRENTEU_DT_TOK">"No Data"</set>
+        <set token="DDFUELLA_DT_TOK">"No Data"</set>
+        <set token="DDFUELNYH_DT_TOK">"No Data"</set>
+        <set token="DJFUELUSGULF_DT_TOK">"No Data"</set>
+        <set token="DHOILNYH_DT_TOK">"No Data"</set>
+        <set token="DHHNGSP_DT_TOK">"No Data"</set>
+        <set token="DGASUSGULF_DT_TOK">"No Data"</set>
+        <set token="DGASNYH_DT_TOK">"No Data"</set>
+      </condition>
+    </done>
+    <earliest>-30d</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  <search id="all_equities_ttm_base">
+    <query>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Stock Market Indexes") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+| stats last(Value) as Value by _time SeriesID]]>
+    </query>
+    <earliest>-12mon</earliest>
+    <latest>now</latest>
+  </search>
+  <search>
+    <query>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Stock Market Indexes") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
+    </query>
+    <done>
+      <condition match=" 'job.resultCount' &gt; 0">
+        <set token="DJIA_DT_TOK">$result.DJIA$</set>
+        <set token="SP500_DT_TOK">$result.SP500$</set>
+        <set token="NQ100_DT_TOK">$result.NASDAQ100$</set>
+      </condition>
+      <condition>
+        <set token="DJIA_DT_TOK">"No Data"</set>
+        <set token="SP500_DT_TOK">"No Data"</set>
+        <set token="NQ100_DT_TOK">"No Data"</set>
+      </condition>
+    </done>
+    <earliest>-30d</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  <search>
+    <query>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Stock Market Indexes") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Value | transpose 0 column_name=SeriesID header_field=SeriesID | head 1 | fields - SeriesID]]>
+    </query>
+    <done>
+      <condition match=" 'job.resultCount' &gt; 0">
+        <set token="DJIA_LAST_TOK">$result.DJIA$</set>
+        <set token="SP500_LAST_TOK">$result.SP500$</set>
+        <set token="NQ100_LAST_TOK">$result.NASDAQ100$</set>
+      </condition>
+      <condition>
+        <set token="DJIA_LAST_TOK">"No Data"</set>
+        <set token="SP500_LAST_TOK">"No Data"</set>
+        <set token="NQ100_LAST_TOK">"No Data"</set>
+      </condition>
+    </done>
+    <earliest>-30d</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  <search id="all_employment_ttm_base">
+    <query>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Employment") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+| stats last(Value) as Value by _time SeriesID]]>
+    </query>
+    <earliest>-12mon</earliest>
+    <latest>now</latest>
+  </search>
+  <search>
+    <query>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Employment") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
+    </query>
+    <done>
+      <condition match=" 'job.resultCount' &gt; 0">
+        <set token="ICSA_DT_TOK">$result.ICSA$</set>
+        <set token="UNRATE_DT_TOK">$result.UNRATE$</set>
+        <set token="PAYEMS_DT_TOK">$result.PAYEMS$</set>
+        <set token="NPPTTL_DT_TOK">$result.NPPTTL$</set>
+        <set token="AHETPI_DT_TOK">$result.AHETPI$</set>
+        <set token="AWHNONAG_DT_TOK">$result.AWHNONAG$</set>
+      </condition>
+      <condition>
+        <set token="ICSA_DT_TOK">"No Data"</set>
+        <set token="UNRATE_DT_TOK">"No Data"</set>
+        <set token="PAYEMS_DT_TOK">"No Data"</set>
+        <set token="NPPTTL_DT_TOK">"No Data"</set>
+        <set token="AHETPI_DT_TOK">"No Data"</set>
+        <set token="AWHNONAG_DT_TOK">"No Data"</set>
+      </condition>
+    </done>
+    <earliest>-60d</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  <search id="all_consumer_ttm_base">
+    <query>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Consumer") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+| stats last(Value) as Value by _time SeriesID]]>
+    </query>
+    <earliest>-12mon</earliest>
+    <latest>now</latest>
+  </search>
+  <search>
+    <query>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Consumer") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
+    </query>
+    <done>
+      <condition match=" 'job.resultCount' &gt; 0">
+        <set token="CPIAUCSL_DT_TOK">$result.CPIAUCSL$</set>
+        <set token="PCE_DT_TOK">$result.PCE$</set>
+        <set token="PI_DT_TOK">$result.PI$</set>
+        <set token="PSAVERT_DT_TOK">$result.PSAVERT$</set>
+      </condition>
+      <condition>
+        <set token="CPIAUCSL_DT_TOK">"No Data"</set>
+        <set token="PCE_DT_TOK">"No Data"</set>
+        <set token="PI_DT_TOK">"No Data"</set>
+        <set token="PSAVERT_DT_TOK">"No Data"</set>
+      </condition>
+    </done>
+    <earliest>-1y</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  <search id="all_manufacturing_ttm_base">
+    <query>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Manufacturing") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+| stats last(Value) as Value by _time SeriesID]]>
+    </query>
+    <earliest>-12mon</earliest>
+    <latest>now</latest>
+  </search>
+  <search>
+    <query>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Manufacturing") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
+    </query>
+    <done>
+      <condition match=" 'job.resultCount' &gt; 0">
+        <set token="ACOGNO_DT_TOK">$result.ACOGNO$</set>
+        <set token="AMTMNO_DT_TOK">$result.AMTMNO$</set>
+        <set token="DGORDER_DT_TOK">$result.DGORDER$</set>
+        <set token="MNFCTRIMSA_DT_TOK">$result.MNFCTRIMSA$</set>
+        <set token="MNFCTRIRSA_DT_TOK">$result.MNFCTRIRSA$</set>
+        <set token="MNFCTRSMSA_DT_TOK">$result.MNFCTRSMSA$</set>
+      </condition>
+      <condition>
+        <set token="ACOGNO_DT_TOK">"No Data"</set>
+        <set token="AMTMNO_DT_TOK">"No Data"</set>
+        <set token="DGORDER_DT_TOK">"No Data"</set>
+        <set token="MNFCTRIMSA_DT_TOK">"No Data"</set>
+        <set token="MNFCTRIRS_DT_TOK">"No Data"</set>
+        <set token="MNFCTRSMSA_DT_TOK">"No Data"</set>
+      </condition>
+    </done>
+    <earliest>-2y</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  <search id="all_housing_ttm_base">
+    <query>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Housing") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) Value!="."
+| stats last(Value) as Value by _time SeriesID]]>
+    </query>
+    <earliest>-12mon</earliest>
+    <latest>now</latest>
+  </search>
+  <search>
+    <query>
+      <![CDATA[`mts_econ_indexes` SeriesID IN ([| inputlookup FRED_Default_List where (Category="Housing") | fields FredID | mvcombine FredID | eval fid=mvjoin(FredID,",") | return $fid]) | sort Date desc | dedup SeriesID | table SeriesID Date | transpose 0 column_name=SeriesID header_field=SeriesID  | fields - SeriesID]]>
+    </query>
+    <done>
+      <condition match=" 'job.resultCount' &gt; 0">
+        <set token="CSUSHPINSA_DT_TOK">$result.CSUSHPINSA$</set>
+        <set token="EXHOSLUSM495S_DT_TOK">$result.EXHOSLUSM495S$</set>
+        <set token="HSN1F_DT_TOK">$result.HSN1F$</set>
+        <set token="MSACSR_DT_TOK">$result.MSACSR$</set>
+        <set token="PERMIT_DT_TOK">$result.PERMIT$</set>
+        <set token="RSAHORUSQ156S_DT_TOK">$result.RSAHORUSQ156S$</set>
+      </condition>
+      <condition>
+        <set token="CSUSHPINSA_DT_TOK">"No Data"</set>
+        <set token="EXHOSLUSM495S_DT_TOK">"No Data"</set>
+        <set token="HSN1F_DT_TOK">"No Data"</set>
+        <set token="MSACSR_DT_TOK">"No Data"</set>
+        <set token="PERMIT_DT_TOK">"No Data"</set>
+        <set token="RSAHORUSQ156S_DT_TOK">"No Data"</set>
+      </condition>
+    </done>
+    <earliest>-1y</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+  </search>
+  <row>
+    <panel>
+      <html id="top_row">
+    <a href="#" class="btn-pill" data-set-token="show_rates_bonds" data-value="show" data-token-json="{&quot;show_currency_monetary&quot;: null, &quot;show_commodities_equities&quot;: null, &quot;show_employment_consumer&quot;: null, &quot;show_manufacturing_housing&quot;: null}">
+      Interest Rates &amp; Bonds
+    </a>
+    
+    <a href="#" class="btn-pill" data-set-token="show_currency_monetary" data-value="show" data-token-json="{&quot;show_rates_bonds&quot;: null, &quot;show_commodities_equities&quot;: null, &quot;show_employment_consumer&quot;: null, &quot;show_manufacturing_housing&quot;: null}">
+      Currency &amp; Monetary
+    </a>
+    <a href="#" class="btn-pill" data-set-token="show_commodities_equities" data-value="show" data-token-json="{&quot;show_currency_monetary&quot;: null, &quot;show_rates_bonds&quot;: null, &quot;show_employment_consumer&quot;: null, &quot;show_manufacturing_housing&quot;: null}">
+      Commodities &amp; Equities
+    </a>
+    
+        <a href="#" class="btn-pill" data-set-token="show_employment_consumer" data-value="show" data-token-json="{&quot;show_currency_monetary&quot;: null, &quot;show_commodities_equities&quot;: null, &quot;show_rates_bonds&quot;: null, &quot;show_manufacturing_housing&quot;: null}">
+      Employment &amp; Consumer
+    </a>
+    
+    <a href="#" class="btn-pill" data-set-token="show_manufacturing_housing" data-value="show" data-token-json="{&quot;show_currency_monetary&quot;: null, &quot;show_commodities_equities&quot;: null, &quot;show_employment_consumer&quot;: null, &quot;show_rates_bonds&quot;: null}">
+      Manufacturing &amp; Housing
+    </a>
+     
+     </html>
+    </panel>
+  </row>
+  <row depends="$show_rates_bonds$">
+    <panel>
+      <html>
+        <center>
+          <h1>Interest Rates</h1>
+        </center>
+      </html>
+    </panel>
+  </row>
+  <row depends="$show_rates_bonds$">
+    <panel>
+      <title>$DGS2_NAME_TOK$</title>
+      <single>
+        <title>$DGS2_DT_TOK$ - TTM</title>
+        <search base="all_rates_ttm_base">
+          <query>| search SeriesID=DGS2 | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.000</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/interest_rates_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>$DGS5_NAME_TOK$</title>
+      <single>
+        <title>$DGS5_DT_TOK$ - TTM</title>
+        <search base="all_rates_ttm_base">
+          <query>| search SeriesID=DGS5 | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="numberPrecision">0.000</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/interest_rates_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>$DGS10_NAME_TOK$</title>
+      <single>
+        <title>$DGS10_DT_TOK$ - TTM</title>
+        <search base="all_rates_ttm_base">
+          <query>| search SeriesID=DGS10 | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.000</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/interest_rates_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>$T10Y2Y_NAME_TOK$</title>
+      <single>
+        <title>$T10Y2Y_DT_TOK$ - TTM</title>
+        <search base="all_rates_ttm_base">
+          <query>| search SeriesID=T10Y2Y | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.000</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/interest_rates_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>$DGS30_NAME_TOK$</title>
+      <single>
+        <title>$DGS30_DT_TOK$ - TTM</title>
+        <search base="all_rates_ttm_base">
+          <query>| search SeriesID=DGS30 | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.000</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/interest_rates_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>$DFF_NAME_TOK$</title>
+      <single>
+        <title>$DFF_DT_TOK$ - TTM</title>
+        <search base="all_rates_ttm_base">
+          <query>| search SeriesID=DFF | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.000</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/interest_rates_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>$MORTGAGE30US_NAME_TOK$</title>
+      <single>
+        <title>$MORTGAGE30US_DT_TOK$ - TTM</title>
+        <search base="all_rates_ttm_base">
+          <query>| search SeriesID=MORTGAGE30US | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.000</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/interest_rates_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+  </row>
+  <row depends="$show_rates_bonds$">
+    <panel>
+      <html>
+        <center>
+    <h1>Corporate Bonds</h1>
+    </center>
+  </html>
+    </panel>
+  </row>
+  <row depends="$show_rates_bonds$">
+    <panel>
+      <title>ICE BofAML AAA Effective Yield</title>
+      <single>
+        <title>$BAMLC0A1CAAAEY_DT_TOK$ - TTM</title>
+        <search base="all_bonds_ttm_base">
+          <query>| search SeriesID=BAMLC0A1CAAAEY | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/corporate_bonds_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>ICE BofAML BBB Effective Yield</title>
+      <single>
+        <title>$BAMLC0A4CBBBEY_DT_TOK$ - TTM</title>
+        <search base="all_bonds_ttm_base">
+          <query>| search SeriesID=BAMLC0A4CBBBEY | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/corporate_bonds_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>ICE BofAML High Yield Master II Effective Yield</title>
+      <single>
+        <title>$BAMLH0A0HYM2EY_DT_TOK$ - TTM</title>
+        <search base="all_bonds_ttm_base">
+          <query>| search SeriesID=BAMLH0A0HYM2EY | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/corporate_bonds_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Moody's Seasoned Aaa Yield</title>
+      <single>
+        <title>$DAAA_DT_TOK$ - TTM</title>
+        <search base="all_bonds_ttm_base">
+          <query>| search SeriesID=DAAA | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/corporate_bonds_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Moody's Seasoned Baa Yield</title>
+      <single>
+        <title>$DBAA_DT_TOK$ - TTM</title>
+        <search base="all_bonds_ttm_base">
+          <query>| search SeriesID=DBAA | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/corporate_bonds_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>ICE BofAML AAA Option-Adjusted Spread</title>
+      <single>
+        <title>$BAMLC0A1CAAA_DT_TOK$ - TTM</title>
+        <search base="all_bonds_ttm_base">
+          <query>| search SeriesID=BAMLC0A1CAAA | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/corporate_bonds_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>ICE BofAML BBB Option-Adjusted Spread</title>
+      <single>
+        <title>$BAMLC0A4CBBB_DT_TOK$ - TTM</title>
+        <search base="all_bonds_ttm_base">
+          <query>| search SeriesID=BAMLC0A4CBBB | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/corporate_bonds_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>ICE BofAML High Yield Master II Option-Adjusted Spread</title>
+      <single>
+        <title>$BAMLH0A0HYM2_DT_TOK$ - TTM</title>
+        <search base="all_bonds_ttm_base">
+          <query>| search SeriesID=BAMLH0A0HYM2 | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/corporate_bonds_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>ICE BofAML US High Yield CCC or Below Option-Adjusted Spread</title>
+      <single>
+        <title>$BAMLH0A3HYC_DT_TOK$ - TTM</title>
+        <search base="all_bonds_ttm_base">
+          <query>| search SeriesID=BAMLH0A3HYC | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/corporate_bonds_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>ICE BofA US Corporate Index Total Return Index Value</title>
+      <single>
+        <title>$BAMLCC0A0CMTRIV_DT_TOK$ - TTM</title>
+        <search base="all_bonds_ttm_base">
+          <query>| search SeriesID=BAMLCC0A0CMTRIV | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/corporate_bonds_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+  </row>
+  <row depends="$show_currency_monetary$">
+    <panel>
+      <html>
+        <center>
+    <h1>Currencies</h1>
+    </center>
+  </html>
+    </panel>
+  </row>
+  <row depends="$show_currency_monetary$">
+    <panel>
+      <title>US Dollar/Euro</title>
+      <single>
+        <title>$DEXUSEU_DT_TOK$ - TTM</title>
+        <search base="all_currency_ttm_base">
+          <query>| search SeriesID=DEXUSEU | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.000</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/currency_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>US Dollar/British Pound</title>
+      <single>
+        <title>$DEXUSUK_DT_TOK$ - TTM</title>
+        <search base="all_currency_ttm_base">
+          <query>| search SeriesID=DEXUSUK | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.000</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/currency_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Chinese Yuan/US Dollar</title>
+      <single>
+        <title>$DEXCHUS_DT_TOK$ - TTM</title>
+        <search base="all_currency_ttm_base">
+          <query>| search SeriesID=DEXCHUS | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.000</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/currency_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Japanese Yen/US Dollar</title>
+      <single>
+        <title>$DEXJPUS_DT_TOK$ - TTM</title>
+        <search base="all_currency_ttm_base">
+          <query>| search SeriesID=DEXJPUS | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.000</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/currency_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Canadian Dollar/US Dollar</title>
+      <single>
+        <title>$DEXCAUS_DT_TOK$ - TTM</title>
+        <search base="all_currency_ttm_base">
+          <query>| search SeriesID=DEXCAUS | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.000</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/currency_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>US Dollar/Australian Dollar</title>
+      <single>
+        <title>$DEXUSAL_DT_TOK$ - TTM</title>
+        <search base="all_currency_ttm_base">
+          <query>| search SeriesID=DEXUSAL | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.000</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/currency_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Mexican Peso/US Dollar</title>
+      <single>
+        <title>$DEXMXUS_DT_TOK$ - TTM</title>
+        <search base="all_currency_ttm_base">
+          <query>| search SeriesID=DEXMXUS | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/currency_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Coinbase Bitcoin</title>
+      <single>
+        <title>$CBBTCUSD_DT_TOK$ - TTM</title>
+        <search base="all_currency_ttm_base">
+          <query>| search SeriesID=CBBTCUSD | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/currency_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+  </row>
+  <row depends="$show_currency_monetary$">
+    <panel>
+      <html>
+        <center>
+    <h1>Monetary</h1>
+    </center>
+  </html>
+    </panel>
+  </row>
+  <row depends="$show_currency_monetary$">
+    <panel>
+      <title>Money Supply - M1</title>
+      <single>
+        <title>$M1_DT_TOK$ - TTM</title>
+        <search base="all_monetary_ttm_base">
+          <query>| search SeriesID=M1 | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/monetary_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Money Supply - M2</title>
+      <single>
+        <title>$M2_DT_TOK$ - TTM</title>
+        <search base="all_monetary_ttm_base">
+          <query>| search SeriesID=M2 | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/monetary_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Overnight Fed Repo Operations Total Securities Purchased</title>
+      <single>
+        <title>$RPONTTLD_DT_TOK$ - TTM</title>
+        <search base="all_monetary_ttm_base">
+          <query>| search SeriesID=RPONTTLD | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/monetary_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Overnight Fed Repo Operations Total Securities Sold</title>
+      <single>
+        <title>$RRPONTTLD_DT_TOK$ - TTM</title>
+        <search base="all_monetary_ttm_base">
+          <query>| search SeriesID=RRPONTTLD | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/monetary_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+  </row>
+  <row depends="$show_commodities_equities$">
+    <panel>
+      <html>
+        <center>
+    <h1>Commodities</h1>
+    </center>
+  </html>
+    </panel>
+  </row>
+  <row depends="$show_commodities_equities$">
+    <panel>
+      <title>Crude Oil Prices: WTI Crude US</title>
+      <single>
+        <title>$DCOILWTICO_DT_TOK$ - TTM</title>
+        <search base="all_commodities_ttm_base">
+          <query>| search SeriesID=DCOILWTICO | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/commodities_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Crude Oil Prices: Brent - Europe</title>
+      <single>
+        <title>$DCOILBRENTEU_DT_TOK$ - TTM</title>
+        <search base="all_commodities_ttm_base">
+          <query>| search SeriesID=DCOILBRENTEU | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/commodities_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Ultra-Low-Sulfur No. 2 Diesel LA</title>
+      <single>
+        <title>$DDFUELLA_DT_TOK$ - TTM</title>
+        <search base="all_commodities_ttm_base">
+          <query>| search SeriesID=DDFUELLA | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/commodities_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Ultra-Low-Sulfur No. 2 Diesel NY</title>
+      <single>
+        <title>$DDFUELNYH_DT_TOK$ - TTM</title>
+        <search base="all_commodities_ttm_base">
+          <query>| search SeriesID=DDFUELNYH | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/commodities_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Jet Fuel U.S. Gulf Coast</title>
+      <single>
+        <title>$DJFUELUSGULF_DT_TOK$ - TTM</title>
+        <search base="all_commodities_ttm_base">
+          <query>| search SeriesID=DJFUELUSGULF | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/commodities_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>No. 2 Heating Oil New York Harbor</title>
+      <single>
+        <title>$DHOILNYH_DT_TOK$ - TTM</title>
+        <search base="all_commodities_ttm_base">
+          <query>| search SeriesID=DHOILNYH | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/commodities_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Henry Hub Natural Gas Spot</title>
+      <single>
+        <title>$DHHNGSP_DT_TOK$ - TTM</title>
+        <search base="all_commodities_ttm_base">
+          <query>| search SeriesID=DHHNGSP | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/commodities_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Gasoline U.S. Gulf Coast, Regular</title>
+      <single>
+        <title>$DGASUSGULF_DT_TOK$ - TTM</title>
+        <search base="all_commodities_ttm_base">
+          <query>| search SeriesID=DGASUSGULF | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/commodities_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Gasoline New York Harbor, Regular</title>
+      <single>
+        <title>$DGASNYH_DT_TOK$ - TTM</title>
+        <search base="all_commodities_ttm_base">
+          <query>| search SeriesID=DGASNYH | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="useColors">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/commodities_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+  </row>
+  <row depends="$show_commodities_equities$">
+    <panel>
+      <html>
+        <center>
+          <h1>Equities</h1>
+        </center>
+      </html>
+    </panel>
+  </row>
+  <row depends="$show_commodities_equities$">
+    <panel>
+      <title>DOW Jones Industrial Average  -  $DJIA_LAST_TOK$</title>
+      <chart>
+        <title>$DJIA_DT_TOK$ - TTM</title>
+        <search base="all_equities_ttm_base">
+          <query>| search SeriesID=DJIA | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="charting.seriesColors">[0x228C22]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/equity_markets_overview</link>
+        </drilldown>
+      </chart>
+    </panel>
+    <panel>
+      <title>S&amp;P 500  -  $SP500_LAST_TOK$</title>
+      <chart>
+        <title>$SP500_DT_TOK$ - TTM</title>
+        <search base="all_equities_ttm_base">
+          <query>| search SeriesID=SP500 | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="charting.seriesColors">[0xFF0000]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/equity_markets_overview</link>
+        </drilldown>
+      </chart>
+    </panel>
+    <panel>
+      <title>Nasdaq 100  -  $NQ100_LAST_TOK$</title>
+      <chart>
+        <title>$NQ100_DT_TOK$ - TTM</title>
+        <search base="all_equities_ttm_base">
+          <query>| search SeriesID=NASDAQ100 | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="charting.seriesColors">[0x4169E1]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/equity_markets_overview</link>
+        </drilldown>
+      </chart>
+    </panel>
+  </row>
+  <row depends="$show_employment_consumer$">
+    <panel>
+      <html>
+        <center>
+          <h1>Employment</h1>
+        </center>
+      </html>
+    </panel>
+  </row>
+  <row depends="$show_employment_consumer$">
+    <panel>
+      <title>Weekly Jobless Claims</title>
+      <single>
+        <title>$ICSA_DT_TOK$ - TTM</title>
+        <search base="all_employment_ttm_base">
+          <query>| search SeriesID=ICSA | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/employment_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Civilian Unemployment Rate</title>
+      <single>
+        <title>$UNRATE_DT_TOK$ - TTM</title>
+        <search base="all_employment_ttm_base">
+          <query>| search SeriesID=UNRATE | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/employment_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Nonfarm Payrolls (thousands of persons)</title>
+      <single>
+        <title>$PAYEMS_DT_TOK$ - TTM</title>
+        <search base="all_employment_ttm_base">
+          <query>| search SeriesID=PAYEMS | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/employment_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>ADP Nonfarm Payrolls (thousands of persons)</title>
+      <single>
+        <title>$NPPTTL_DT_TOK$ - TTM</title>
+        <search base="all_employment_ttm_base">
+          <query>| search SeriesID=NPPTTL | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/employment_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Average Hourly Earnings of Production and Nonsupervisory Employees, Total Private</title>
+      <single>
+        <title>$AHETPI_DT_TOK$ - TTM</title>
+        <search base="all_employment_ttm_base">
+          <query>| search SeriesID=AHETPI | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/employment_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Average Weekly Hours of Production and Nonsupervisory Employees, Total Private</title>
+      <single>
+        <title>$AWHNONAG_DT_TOK$ - TTM</title>
+        <search base="all_employment_ttm_base">
+          <query>| search SeriesID=AWHNONAG | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/employment_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+  </row>
+  <row depends="$show_employment_consumer$">
+    <panel>
+      <html>
+        <center>
+          <h1>Consumer</h1>
+        </center>
+      </html>
+    </panel>
+  </row>
+  <row depends="$show_employment_consumer$">
+    <panel>
+      <title>Consumer Price Index for All Urban Consumers: All Items</title>
+      <single>
+        <title>$CPIAUCSL_DT_TOK$ - TTM</title>
+        <search base="all_consumer_ttm_base">
+          <query>| search SeriesID=CPIAUCSL | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/consumer_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Personal Income</title>
+      <single>
+        <title>$PI_DT_TOK$ - TTM</title>
+        <search base="all_consumer_ttm_base">
+          <query>| search SeriesID=PI | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/consumer_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Personal Consumption Expenditures</title>
+      <single>
+        <title>$PCE_DT_TOK$ - TTM</title>
+        <search base="all_consumer_ttm_base">
+          <query>| search SeriesID=PCE | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/consumer_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Personal Saving Rate</title>
+      <single>
+        <title>$PSAVERT_DT_TOK$ - TTM</title>
+        <search base="all_consumer_ttm_base">
+          <query>| search SeriesID=PSAVERT | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/consumer_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+  </row>
+  <row depends="$show_manufacturing_housing$">
+    <panel>
+      <html>
+        <center>
+          <h1>Manufacturing</h1>
+        </center>
+      </html>
+    </panel>
+  </row>
+  <row depends="$show_manufacturing_housing$">
+    <panel>
+      <title>Value of Manufacturers' New Orders for Consumer Goods Industries</title>
+      <single>
+        <title>$ACOGNO_DT_TOK$ - TTM</title>
+        <search base="all_manufacturing_ttm_base">
+          <query>| search SeriesID=ACOGNO | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/manufacturing_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Value of Manufacturers' New Orders for All Manufacturing Industries</title>
+      <single>
+        <title>$AMTMNO_DT_TOK$ - TTM</title>
+        <search base="all_manufacturing_ttm_base">
+          <query>| search SeriesID=AMTMNO | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/manufacturing_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Manufacturers' New Orders: Durable Goods</title>
+      <single>
+        <title>$DGORDER_DT_TOK$ - TTM</title>
+        <search base="all_manufacturing_ttm_base">
+          <query>| search SeriesID=DGORDER | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/manufacturing_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Manufacturers Inventories</title>
+      <single>
+        <title>$MNFCTRIMSA_DT_TOK$ - TTM</title>
+        <search base="all_manufacturing_ttm_base">
+          <query>| search SeriesID=MNFCTRIMSA | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/manufacturing_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Manufacturers Sales</title>
+      <single>
+        <title>$MNFCTRSMSA_DT_TOK$ - TTM</title>
+        <search base="all_manufacturing_ttm_base">
+          <query>| search SeriesID=MNFCTRSMSA | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/manufacturing_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Manufacturers: Inventories to Sales Ratio</title>
+      <single>
+        <title>$MNFCTRIRSA_DT_TOK$ - TTM</title>
+        <search base="all_manufacturing_ttm_base">
+          <query>| search SeriesID=MNFCTRIRSA | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/manufacturing_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+  </row>
+  <row depends="$show_manufacturing_housing$">
+    <panel>
+      <html>
+        <center>
+          <h1>Housing</h1>
+        </center>
+      </html>
+    </panel>
+  </row>
+  <row depends="$show_manufacturing_housing$">
+    <panel>
+      <title>S&amp;P/Case-Shiller U.S. National Home Price Index</title>
+      <single>
+        <title>$CSUSHPINSA_DT_TOK$ - TTM</title>
+        <search base="all_housing_ttm_base">
+          <query>| search SeriesID=CSUSHPINSA | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/housing_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Existing Home Sales</title>
+      <single>
+        <title>$EXHOSLUSM495S_DT_TOK$ - TTM</title>
+        <search base="all_housing_ttm_base">
+          <query>| search SeriesID=EXHOSLUSM495S | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/housing_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>New One Family Houses Sold: United States</title>
+      <single>
+        <title>$HSN1F_DT_TOK$ - TTM</title>
+        <search base="all_housing_ttm_base">
+          <query>| search SeriesID=HSN1F | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/housing_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Monthly Supply of Houses in the United States</title>
+      <single>
+        <title>$MSACSR_DT_TOK$ - TTM</title>
+        <search base="all_housing_ttm_base">
+          <query>| search SeriesID=MSACSR | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/housing_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>New Private Housing Units Authorized by Building Permits</title>
+      <single>
+        <title>$PERMIT_DT_TOK$ - TTM</title>
+        <search base="all_housing_ttm_base">
+          <query>| search SeriesID=PERMIT | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/housing_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Homeownership Rate for the United States</title>
+      <single>
+        <title>$RSAHORUSQ156S_DT_TOK$ - TTM</title>
+        <search base="all_housing_ttm_base">
+          <query>| search SeriesID=RSAHORUSQ156S | chart values(Value) as Value by _time</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">all</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+        <drilldown>
+          <link target="_blank">/app/mts_economic_analysis/housing_overview</link>
+        </drilldown>
+      </single>
+    </panel>
+  </row>
+</dashboard>

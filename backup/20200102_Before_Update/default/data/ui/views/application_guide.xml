@@ -1,0 +1,46 @@
+<dashboard theme="dark">
+  <label>Application Guide</label>
+  <row>
+    <panel>
+      
+      <html>
+        
+        The default page of the application is the economic overview shown below. Each panel displays the latest value and trailing twelve month trend for the FRED series specified. The latest date collected for each series is displayed.
+        <br/>
+        <br/>
+        <img src="/static/app/mts_economic_analysis/economic_overview_view.png"></img>
+        <br/>
+        <br/>
+        The category menu toggles the value categories and each panel links to the detail drilldown for that category. Each category drill down will contain the high level current values from the over view page. 
+        The page will also contain a series comparison line chart which can be modified to include the desired series in the category. The page also hase two detail panels which can select any series from the category. 
+        These panels show the series information from the list, a timechart, range guage, and summary statistics.
+        An example category drilldown is shown below.
+        <br/>
+        <br/>
+        <img src="/static/app/mts_economic_analysis/category_drilldown_example_view.png"></img>
+        <br/>
+        <img src="/static/app/mts_economic_analysis/category_drilldown_exampleb_view.png"></img>
+        <br/>
+        <br/>
+        
+        
+        The default series list can also be used to show detail on any data series. To get to the default list click default-->FRED Default List in the application menu, as shown below.
+        <br/>
+        <br/>
+        <img src="/static/app/mts_economic_analysis/help_fred_default_list_menulink01.png"></img><br/><br/>
+        
+        The default list management view is then displayed, as shown below. The list can be filtered by category and frequency using the dropdown lists.<br/><br/>
+        <img src="/static/app/mts_economic_analysis/help_fred_default_list_view01.png"></img><br/><br/>
+        
+        The series detail dashboard below is shown by clicking on the FredID of any series.<br/><br/>
+        <img src="/static/app/mts_economic_analysis/series_drilldown_example_view.png"></img><br/><br/>
+        
+        
+        
+        
+        
+        Next--><a href="adding_a_data_series">Adding a Data Series</a>
+      </html>
+    </panel>
+  </row>
+</dashboard>

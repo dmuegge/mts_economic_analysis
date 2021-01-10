@@ -70,23 +70,3 @@ The series detail dashboard below is shown by clicking on the FredID of any seri
 
 ![Category Drilldown](/appserver/static/series_drilldown_example_view.png)
 
-## Change History
-<table>
-<tr><td>Version</td><td>Changes</td></tr>
-
-<tr><td>0.1.0</td>
-<td>Initial Release
-</td></tr>
-<tr><td>0.1.1</td>
-<td>Update app.conf naming and spelling issue
-</td></tr>
-<tr><td>0.1.2</td>
-<td>
-<ul>
-<li>Removed panels for series ID's GOLDAMGBD228NLBM & SLVPRUSD from dashboards<br>
-   <ul>
-      <li>they are no longer available via the FRED API
-   </ul>
-</td></tr>
-
-</table>

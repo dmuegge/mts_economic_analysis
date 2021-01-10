@@ -1,0 +1,11 @@
+[app/install/install_source_checksum]
+version = 8.1.0
+modtime = 1604237105.081058000
+
+[views/economic_overview]
+version = 8.1.0
+modtime = 1607781641.190788000
+
+[views/commodities_overview]
+version = 8.1.0
+modtime = 1607781756.115868000

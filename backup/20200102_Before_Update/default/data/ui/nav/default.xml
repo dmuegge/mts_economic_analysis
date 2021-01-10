@@ -1,0 +1,53 @@
+<nav search_view="search"> 
+  
+  <view name="economic_overview" default='true'/>
+  
+  
+  <collection label="Interest Rates &amp; Bonds">
+    <view name="interest_rates_overview" />
+    <view name="corporate_bonds_overview" />
+  </collection>
+  
+  
+  <collection label="Currency &amp; Monetary">
+    <view name="currency_overview" />
+    <view name="monetary_overview" />
+  </collection>
+  
+  
+  <collection label="Commodities &amp; Equities">
+    <view name="commodities_overview" />
+    <view name="equity_markets_overview" />
+  </collection>
+  
+  <collection label="Employment &amp; Consumer">
+    <view name="employment_overview" />
+    <view name="consumer_overview" />
+    
+  </collection>
+  
+  <collection label="Manufacturing &amp; Housing">
+    <view name="manufacturing_overview" />
+    <view name="housing_overview" />
+  </collection>
+  
+  
+  <collection label="Default">
+    <view name="fred_default_list" />
+    <view name="search"  />
+  	<view name="datasets" />
+  	<view name="reports" />
+  	<view name="alerts" />
+  	<view name="dashboards" />
+  </collection>
+  
+  <collection label="Help">
+    <view name="introduction" />
+    <view name="getting_started" />
+    <view name="application_guide" />
+    <view name="adding_a_data_series" />
+  </collection>
+  
+  
+  
+</nav>

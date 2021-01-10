@@ -1,0 +1,140 @@
+<form script="fred_serieslist_crud.js" stylesheet="fred_serieslist_crud_style.css" theme="dark">
+  <label>FRED Default List</label>
+  <search id="updateSearch" depends="$update_key_tok$, $update_fredid_tok$, $update_name_tok$, $update_frequency_tok$, $update_category_tok$, $update_description_tok$, $update_url_tok$">
+    <query>
+      | inputlookup FRED_Default_List
+      | eval key=_key 
+      | WHERE key="$update_key_tok$" 
+      | eval FredID="$update_fredid_tok$" 
+      | eval Name="$update_name_tok$"
+      | eval Frequency="$update_frequency_tok$"
+      | eval Category="$update_category_tok$"
+      | eval URL="$update_url_tok$"
+      | eval Description="$update_description_tok$" 
+      | outputlookup FRED_Default_List append=t
+    </query>
+  </search>
+  <search id="createSearch" depends="$create_fredid_tok$, $create_name_tok$, $create_frequency_tok$, $create_category_tok$, $create_description_tok$, $create_url_tok$">
+    <query>
+      | inputlookup FRED_Default_List | append [stats count | eval FredID="$create_fredid_tok$" 
+      | eval Name="$create_name_tok$"
+      | eval Frequency="$create_frequency_tok$"
+      | eval Category="$create_category_tok$"
+      | eval URL="$create_url_tok$"
+      | eval Description="$create_description_tok$" ] 
+      | table FredID, Name, Frequency, Category, URL, Description, URL
+      | outputlookup FRED_Default_List
+    </query>
+  </search>
+  <search id="deleteSearch" depends="$delete_key_tok$">
+    <query>
+      | inputlookup FRED_Default_List | eval key=_key | WHERE NOT key="$delete_key_tok$" | outputlookup FRED_Default_List
+    </query>
+  </search>
+  <fieldset submitButton="false">
+    <input type="dropdown" token="category_tok" searchWhenChanged="true">
+      <label>Category</label>
+      <fieldForLabel>Category</fieldForLabel>
+      <fieldForValue>Category</fieldForValue>
+      <search>
+        <query>| inputlookup FRED_Default_List | dedup Category | sort Category | table Category</query>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </search>
+      <choice value="*">All</choice>
+      <initialValue>*</initialValue>
+      <prefix>"</prefix>
+      <suffix>"</suffix>
+      <default>*</default>
+    </input>
+    <input type="dropdown" token="FREQUENCY_TOK" searchWhenChanged="true">
+      <label>Frequency</label>
+      <choice value="*">All</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+      <fieldForLabel>Frequency</fieldForLabel>
+      <fieldForValue>Frequency</fieldForValue>
+      <search>
+        <query>| inputlookup FRED_Default_List | dedup Frequency | sort Frequency | table Frequency</query>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </search>
+    </input>
+  </fieldset>
+  <row>
+    <panel id="serieslistDisplayPanel">
+      <table id="serieslistDisplayTable">
+        <search id="serieslistDisplaySearch">
+          <query>| inputlookup FRED_Default_List where (Category=$category_tok$ AND Frequency=$FREQUENCY_TOK$) | eval Update="Update" | eval Delete="Delete" 
+| eval URL=ltrim(URL, "https://") 
+| table *,FredID, Name, Frequency, Category, Description, URL,Update,Delete | sort FredID</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <drilldown>
+          <condition field="FredID">
+            <link>
+              <![CDATA[
+               /app/mts_economic_analysis/fred_list_detail_drilldown?form.FredID=$row.FredID$&form.Frequency=$row.Frequency$&form.Name=$row.Name$&form.Description=$row.Description$
+             ]]>
+            </link>
+          </condition>
+          <condition field="URL">
+            <link target="_blank">
+              <![CDATA[ https://$row.URL|n$ ]]>
+            </link>
+          </condition>
+        </drilldown>
+      </table>
+    </panel>
+    <panel id="serieslistFormPanel">
+      <html>
+        <form>
+          <div>
+          	<label for="Symbol">FredID</label>
+          	<input style="width: 95%" type="text" name="FredID"/>
+          </div>
+          
+          <div>
+          	<label for="Name">Name</label>
+          	<input style="width: 95%" type="text" name="Name"/>
+          </div>
+          
+          <div>
+          	<label for="Name">Frequency</label>
+          	<input style="width: 95%" type="text" name="Frequency"/>
+          </div>
+          
+          <div>
+          	<label for="Name">Category</label>
+          	<input style="width: 95%" type="text" name="Category"/>
+          </div>
+          
+          <div>
+          	<label for="Description">Description</label>
+          	<input style="width: 95%" type="text" name="Description"/>
+          </div>
+          
+          <div>
+          	<label for="Exchange">URL</label>
+          	<input style="width: 95%" type="text" name="URL"/>
+          </div>
+          
+          <input type="hidden" name="_key"/>
+          <div>
+            <button id="submitButton">Submit</button>
+          </div>
+        </form>
+      </html>
+    </panel>
+  </row>
+</form>

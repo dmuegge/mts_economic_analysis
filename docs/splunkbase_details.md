@@ -24,24 +24,24 @@ The index referenced in this app is configured in the `mts_econ_indexes` macro a
 ## Application Overview
 The default page of the application is the economic overview shown below. Each panel displays the latest value and trailing twelve month trend for the FRED series specified. The latest date collected for each series is displayed.
 
-![Economic Overview](/appserver/static/economic_overview_view.png)
+![Economic Overview](71cd28bc-f040-11ea-803a-0ab0493fa2af.png)
 
 The category menu toggles the value categories and each panel links to the detail drilldown for that category. Each category drill down will contain the high level current values from the over view page. The page will also contain a series comparison line chart which can be modified to include the desired series in the category. The page also has two detail panels which can select any series from the category. These panels show the series information from the list, a timechart, range gauge, and summary statistics. An example category drilldown is shown below.
 
-![Category Drilldown](/appserver/static/category_drilldown_example_view.png)
-![Category Drilldown](/appserver/static/category_drilldown_exampleb_view.png)
+![Category Drilldown](b6aec976-f041-11ea-a740-0288adb7261d.png)
+![Category Drilldown](d6af5c9a-f041-11ea-a4f9-02875c45155f.png)
 
 The default series list can also be used to show detail on any data series. To get to the default list click default-->FRED Default List in the application menu, as shown below.
 
-![Category Drilldown](/appserver/static/help_fred_default_list_menulink01.png)
+![Category Drilldown](ed9c2e60-f041-11ea-8417-0a43ef1a907b.png)
 
 The default list management view is then displayed, as shown below. The list can be filtered by category and frequency using the dropdown lists.
 
-![Category Drilldown](/appserver/static/help_fred_default_list_view01.png)
+![Category Drilldown](03047d02-f042-11ea-a334-064f6e1bb945.png)
 
 The series detail dashboard below is shown by clicking on the FredID of any series.
 
-![Category Drilldown](/appserver/static/series_drilldown_example_view.png)
+![Category Drilldown](1bba86f2-f042-11ea-8ef5-02875c45155f.png)
 
 ## Change History
 <table>

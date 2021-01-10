@@ -1,0 +1,4 @@
+0.1.2 (2021-01-09)
+Resolved the following issues:
+- Removed series ID's GOLDAMGBD228NLBM & SLVPRUSD from commodity pages
+    they are no longer available via the FRED API
